@@ -93,4 +93,20 @@ public class Login extends AppCompatActivity {
 
 
     }
+
+
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void drawableSetEditTextBackgroundError(EditText editText){
+
+        editText.setBackground(getDrawable(R.drawable.error_edittext_background));
+    }
+
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void drawableSetEditTextBackgroundNormal(EditText editText){
+        editText.setBackground(getDrawable(R.drawable.simple_edit_input_background));
+    }
+
+
 }

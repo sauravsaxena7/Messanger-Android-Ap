@@ -145,7 +145,7 @@
             android:textSize="14sp"
             app:met_textColor="#fff"
             app:met_textColorHint="#4CAF50"
-            android:inputType="textPersonName"
+            android:inputType="phone"
             android:textColorHint="#000000"
             app:met_clearButton="true"
             app:met_baseColor="#fff"
@@ -249,7 +249,7 @@
 
 
             <RadioGroup
-                android:id="@+id/radioGroup"
+                android:id="@+id/user_details_gender_radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="24dp"
