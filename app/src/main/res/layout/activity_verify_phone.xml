@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background=" #4b5d67"
+    android:layout_height="match_parent"
+    tools:context=".UserHandle.VerifyPhone">
+
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="373dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:elevation="24dp"
+        android:backgroundTint="#0f4c75"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="7dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="24dp"
+        tools:targetApi="lollipop">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="27sp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:fontFamily="@font/opensansregular"
+                android:text="Login"
+                tools:ignore="HardcodedText" />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/phone_login_page"
+                android:visibility="visible"
+                >
+
+
+
+                <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                    android:id="@+id/login_verify_ccp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    app:ccp_textColor="#fff"
+                    app:ccp_dialogTextColor="#fff"
+                    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/opensansregular"
+                    android:background="@drawable/simple_edit_input_background"
+                    app:layout_constraintVertical_bias="0.26999998" />
+
+
+
+
+
+
+                <EditText
+                    android:id="@+id/login_Phone_verify_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/simple_edit_input_background"
+                    android:ems="10"
+                    android:hint="Phone Number"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:inputType="phone"
+                    android:padding="14dp"
+                    android:textColorHint="#fff"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/opensansregular"
+                    tools:ignore="HardcodedText,RtlHardcoded,TextFields" />
+
+
+                <LinearLayout
+                    android:id="@+id/phone_verify_login_otp_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/login_otp_verify_et"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:textColor="#ffF"
+                        android:textSize="14sp"
+                        android:background="@drawable/simple_edit_input_background"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:inputType="phone"
+                        android:textColorHint="#fff"
+                        android:hint="OTP"
+                        android:padding="13dp"
+                        android:maxLength="6"
+                        android:autofillHints="OTP"
+                        android:fontFamily="@font/opensansregular"
+                        tools:ignore="HardcodedText,RtlSymmetry" />
+
+
+                    <TextView
+                        android:id="@+id/login_resend_verify_otp_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="13dp"
+                        android:textSize="14sp"
+                        android:text="Resend OTP"
+                        android:layout_marginRight="10dp"
+                        android:textColor="#fff"
+                        android:background="@drawable/simple_edit_input_background"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensansregular"
+                        tools:ignore="HardcodedText" />
+
+
+
+
+                </LinearLayout>
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/login_next_verify_btn_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="Next"
+                        android:backgroundTint="#03A9F4"
+                        android:padding="10dp"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        tools:targetApi="lollipop" />
+
+                    <ProgressBar
+                        android:id="@+id/phone_verify_progressBar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignTop="@+id/login_next_verify_btn_id"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="161dp"
+                        android:layout_marginLeft="160dp"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        android:layout_marginEnd="160dp"
+                        android:layout_marginRight="160dp"
+                        android:elevation="25dp"
+                        android:indeterminateTint="#fff" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                >
+
+
+
+                <TextView
+                    android:id="@+id/login_with_phone_or_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:textSize="13sp"
+                    android:text="Or Login with phone"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="36dp"
+                    android:textColor="#bbe1fa"
+                    android:fontFamily="@font/opensansregular"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/login_forgot_your_password_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:textSize="13sp"
+                    android:text="Forgot your password ?"
+                    android:textStyle="bold"
+                    android:textColor="#4CAF50"
+                    android:fontFamily="@font/opensansregular"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_to_register_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Don't have an account? Register"
+                android:backgroundTint="#009688"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="14sp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/opensansregular"
+                tools:targetApi="lollipop" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/blood_bank_logo"
+                    android:layout_gravity="center"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:text="Blood Bank"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:textColor="#CDDC39"
+                    android:fontFamily="serif-monospace"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+</ScrollView>

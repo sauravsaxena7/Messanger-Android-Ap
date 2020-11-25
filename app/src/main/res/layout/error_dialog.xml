@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#0f4c75"
+        android:gravity="center_horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Error!"
+            android:padding="7dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:textColor="#F44336"
+            android:fontFamily="@font/opensansregular"
+            android:textSize="20sp"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/error_icon"
+            tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
+
+        <TextView
+            android:id="@+id/error_content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_unregister_carrier_number"
+            android:textColor="#F44336"
+            android:padding="12dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="30dp"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/error_button_id"
+            android:padding="11dp"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:layout_width="180dp"
+            android:backgroundTint="#009688"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            tools:targetApi="lollipop"
+            tools:ignore="HardcodedText" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

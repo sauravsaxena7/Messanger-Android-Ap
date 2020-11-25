@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+
+    <RadioGroup
+        android:id="@+id/blood_radioGroup"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/male_id"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blood_group_picker_tv"
+        tools:ignore="UnknownIdInLayout">
+
+        <RadioButton
+            android:id="@+id/a_plus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="A RhD positive (A+)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+        <RadioButton
+            android:id="@+id/a_minus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="A RhD negative (A-)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+        <RadioButton
+            android:id="@+id/b_plus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="B RhD positive (B+)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+        <RadioButton
+            android:id="@+id/b_minus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="B RhD negative (B-)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+
+        <RadioButton
+            android:id="@+id/o_plus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:checked="true"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="O RhD positive (O+)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+
+        <RadioButton
+            android:id="@+id/o_minus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="O RhD negative (O-)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+        <RadioButton
+            android:id="@+id/ab_plus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="AB RhD positive (AB+)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+        <RadioButton
+            android:id="@+id/ab_minus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#009688"
+            android:fontFamily="@font/opensansregular"
+            android:padding="10dp"
+            android:text="AB RhD negative (AB-)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            tools:targetApi="lollipop" />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/blood_group_picker_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensansregular"
+        android:text="Is What Blood Group You Are Belonging ?"
+        android:textColor="#009688"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.251"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011"
+        tools:ignore="HardcodedText" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_picker_cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="35dp"
+        android:paddingLeft="35dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="35dp"
+        android:paddingBottom="10dp"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        app:backgroundTint="#E91E63"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blood_radioGroup"
+        tools:ignore="HardcodedText" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_picker_donelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="39dp"
+        android:paddingTop="10dp"
+        android:paddingRight="39dp"
+        android:paddingBottom="10dp"
+        android:text="Done"
+        android:textAllCaps="false"
+        app:backgroundTint="#009688"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blood_radioGroup"
+        tools:ignore="HardcodedText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

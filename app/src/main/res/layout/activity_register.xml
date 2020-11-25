@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4b5d67"
+    tools:context=".UserHandle.Register">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="373dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:elevation="24dp"
+        android:backgroundTint="#0f4c75"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="7dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="24dp"
+        tools:targetApi="lollipop">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="27sp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:fontFamily="@font/opensansregular"
+                android:text="Register"/>
+
+
+
+
+
+            <EditText
+                android:id="@+id/register_Username_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:autofillHints=""
+                android:background="@drawable/simple_edit_input_background"
+                android:ems="10"
+                android:hint="Username"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:inputType="textWebEmailAddress"
+                android:padding="14dp"
+                android:textColorHint="#fff"
+                android:textColor="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                tools:ignore="RtlHardcoded" />
+
+
+            <EditText
+                android:id="@+id/register_emailAddress_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:autofillHints=""
+                android:background="@drawable/simple_edit_input_background"
+                android:ems="10"
+                android:hint="Email Address"
+                android:inputType="textWebEmailAddress"
+                android:padding="14dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                tools:ignore="RtlHardcoded" />
+
+
+            <EditText
+                android:id="@+id/register_Password_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:autofillHints=""
+                android:background="@drawable/simple_edit_input_background"
+                android:ems="10"
+                android:hint="Password"
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:padding="14dp"
+                android:textColorHint="#fff"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/opensansregular"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                tools:ignore="RtlHardcoded" />
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/register_next_btn_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Next"
+                    android:backgroundTint="#2196F3"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    tools:targetApi="lollipop" />
+
+                <ProgressBar
+                    android:id="@+id/register_progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:visibility="gone"
+                    android:layout_alignStart="@+id/register_next_btn_id"
+                    android:layout_alignLeft="@+id/register_next_btn_id"
+                    android:layout_alignEnd="@+id/register_next_btn_id"
+                    android:layout_alignRight="@+id/register_next_btn_id"
+                    android:layout_marginStart="161dp"
+                    android:layout_marginLeft="161dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="160dp"
+                    android:layout_marginRight="160dp"
+                    android:elevation="25dp"
+                    android:indeterminateTint="#fff" />
+
+            </RelativeLayout>
+
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_to_login_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Already have an account? Login"
+                android:backgroundTint="#009688"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="14sp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/opensansregular"
+                tools:targetApi="lollipop" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/blood_bank_logo"
+                    android:layout_gravity="center"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:text="Blood Bank"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:textColor="#CDDC39"
+                    android:fontFamily="serif-monospace"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+</ScrollView>

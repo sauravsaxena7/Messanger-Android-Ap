@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f4c75"
+    tools:context=".UserDetails.User_Details">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="ScrollViewSize">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_upload_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="60dp"
+            android:contentDescription="todo"
+            android:src="@drawable/teamwork_symbol"
+            tools:ignore="HardcodedText,VectorDrawableCompat" />
+
+
+        <ProgressBar
+            android:id="@+id/imageProgress"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="-75dp"
+            android:alpha="1"
+            android:visibility="invisible"
+            android:indeterminateTint="#FF5722"
+            android:layout_centerInParent="true"
+            tools:ignore="ObsoleteLayoutParam,UnusedAttribute" />
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_edit_buttton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="-5dp"
+            android:contentDescription=""
+            android:src="@drawable/edit_camera_icon"
+            android:layout_marginStart="40dp"
+            tools:ignore="VectorDrawableCompat" />
+
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_details_first_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            app:met_floatingLabel="highlight"
+            android:drawablePadding="5dp"
+            android:textSize="14sp"
+            app:met_textColor="#fff"
+            app:met_textColorHint="#4CAF50"
+            android:inputType="textPersonName"
+            android:textColorHint="#000000"
+            app:met_clearButton="true"
+            app:met_baseColor="#fff"
+            app:met_primaryColor="#2196F3"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            app:met_underlineColor="#2196F3"
+            android:hint="First Name"
+            android:autofillHints=""
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:drawableLeft="@drawable/user_symbol" />
+
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_details_last_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            app:met_floatingLabel="highlight"
+            android:drawablePadding="5dp"
+            android:textSize="14sp"
+            app:met_textColor="#fff"
+            app:met_textColorHint="#4CAF50"
+            android:inputType="textPersonName"
+            android:textColorHint="#000000"
+            app:met_clearButton="true"
+            app:met_baseColor="#fff"
+            app:met_primaryColor="#2196F3"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:hint="Last Name"
+            app:met_underlineColor="#2196F3"
+            android:drawableLeft="@drawable/user_symbol"
+            android:autofillHints=""
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+
+
+
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_details_current_address_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            app:met_floatingLabel="highlight"
+            android:drawablePadding="5dp"
+            android:textSize="14sp"
+            app:met_textColor="#fff"
+            app:met_textColorHint="#4CAF50"
+            android:inputType="textPersonName"
+            android:textColorHint="#000000"
+            app:met_clearButton="true"
+            app:met_baseColor="#fff"
+            app:met_primaryColor="#2196F3"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:hint="Current Address"
+            app:met_underlineColor="#2196F3"
+            android:autofillHints=""
+            android:drawableLeft="@drawable/current_address"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_details_blood_weight_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            app:met_floatingLabel="highlight"
+            android:drawablePadding="5dp"
+            android:textSize="14sp"
+            app:met_textColor="#fff"
+            app:met_textColorHint="#4CAF50"
+            android:inputType="textPersonName"
+            android:textColorHint="#000000"
+            app:met_clearButton="true"
+            app:met_baseColor="#fff"
+            app:met_primaryColor="#2196F3"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            app:met_underlineColor="#2196F3"
+            android:hint="Weight"
+            android:autofillHints=""
+            android:drawableLeft="@drawable/weight_synbol"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_details_work_as_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            app:met_floatingLabel="highlight"
+            android:drawablePadding="5dp"
+            android:textSize="14sp"
+            app:met_textColor="#fff"
+            app:met_textColorHint="#4CAF50"
+            android:inputType="textPersonName"
+            android:textColorHint="#000000"
+            app:met_clearButton="true"
+            app:met_baseColor="#fff"
+            app:met_primaryColor="#2196F3"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            app:met_underlineColor="#2196F3"
+            android:hint="Work As ?"
+            android:autofillHints=""
+            android:drawableLeft="@drawable/work_as_symbol"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/user_details_blood_group_plus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="Blood Group +"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginLeft="28dp"
+            android:textColor="#fff"
+            android:background="@drawable/simple_edit_input_background"
+            android:fontFamily="@font/opensansregular"
+            tools:ignore="HardcodedText" />
+
+
+        <TextView
+            android:id="@+id/user_details_date_of_birth_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="Date Of Birth."
+            android:layout_marginTop="33dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginLeft="28dp"
+            android:textColor="#fff"
+            android:background="@drawable/simple_edit_input_background"
+            android:fontFamily="@font/opensansregular"
+            tools:ignore="HardcodedText" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/simple_edit_input_background"
+            >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Gender:"
+                android:paddingBottom="2dp"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:paddingStart="8dp"
+                android:paddingLeft="8dp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
+                android:checkedButton="@+id/male_id"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <RadioButton
+                    android:id="@+id/male_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#FF5722"
+                    android:layout_weight="1"
+                    android:textColor="#fff"
+                    android:text="Male"
+                    tools:targetApi="lollipop"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:id="@+id/female_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#FF5722"
+                    android:layout_weight="1"
+                    android:textColor="#fff"
+                    android:text="Female"
+                    tools:targetApi="lollipop"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:id="@+id/custom_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#FF5722"
+                    android:layout_weight="1"
+                    android:text="Custom"
+                    android:textColor="#fff"
+                    tools:targetApi="lollipop"
+                    tools:ignore="HardcodedText" />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_user_details_btn_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="24dp"
+            android:padding="13dp"
+            android:textColor="#fff"
+            android:layout_marginBottom="34dp"
+            android:backgroundTint="#009688"
+            android:text="Save Details"
+            tools:targetApi="lollipop"
+            tools:ignore="HardcodedText" />
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>
