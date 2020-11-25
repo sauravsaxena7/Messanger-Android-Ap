@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,16 +19,26 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jlcsoftware.bloodbankcommunity.R;
+import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 
@@ -39,24 +51,34 @@ public class VerifyPhone extends AppCompatActivity {
 
     private CountryCodePicker countryCodePicker;
 
-    private TextView resend_tv;
+    private TextView resend_tv,error_content_tv;
 
     private FirebaseAuth firebaseAuth;
 
-    private Button verify_next_btn;
+    private MaterialButton verify_next_btn,login_email_next_verify_now_btn,error_btn;
 
 
-    private String phoneNumber, ccp,OTP,verificationId;
+    private String phoneNumber, ccp , OTP;
 
-    PhoneAuthProvider.ForceResendingToken token;
+    private String mVerificationId;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
 
 
-    private ProgressBar verify_progress_bar;
+    private ProgressBar verify_progress_bar,verify_email_progressBar;
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
-    private LinearLayout phone_verify_page_layout;
 
+    private FirebaseUser user;
+    Task<Void> usertask;
+
+    private boolean userEmailVerified;
+
+    private LinearLayout phone_verification_page , email_verification_page,phone_verify_otp_layout;
+
+    private TextView email_verification_error_tv;
+
+    private Dialog error_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +98,51 @@ public class VerifyPhone extends AppCompatActivity {
 
         verify_progress_bar=findViewById(R.id.phone_verify_progressBar);
 
-        phone_verify_page_layout = findViewById(R.id.phone_verify_login_otp_layout);
+
+
+        error_dialog=new Dialog(VerifyPhone.this);
+        error_dialog.setContentView(R.layout.error_dialog);
+        error_content_tv=error_dialog.findViewById(R.id.error_content_tv);
+        error_btn=error_dialog.findViewById(R.id.error_button_id);
+
+
+        phone_verification_page = findViewById(R.id.phone_verification_page);
+        email_verification_page = findViewById(R.id.email_verification_page);
+
+        phone_verify_otp_layout = findViewById(R.id.phone_verification_otp_or_resend_page);
+
+
+        email_verification_error_tv = findViewById(R.id.email_verification_error_tv);
+
+        if(firebaseAuth.getCurrentUser()!=null){
+
+            usertask = firebaseAuth.getCurrentUser().reload();
+            usertask.addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                    user = firebaseAuth.getCurrentUser();
+                    userEmailVerified = user.isEmailVerified();
+                }
+            });
+
+
+        }
+
+
+
+
+
+        userEmailVerified = true;
+
+
+        if(userEmailVerified){
+            phone_verification_page.setVisibility(View.VISIBLE);
+            email_verification_page.setVisibility(View.GONE);
+        }else{
+            email_verification_page.setVisibility(View.VISIBLE);
+            phone_verification_page.setVisibility(View.GONE);
+        }
 
 
 
@@ -85,7 +151,10 @@ public class VerifyPhone extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(verify_next_btn.getText().toString().equals("Next")){
+                    resend_tv.setVisibility(View.GONE);
+                    otp_et.setVisibility(View.GONE);
 
+                    otp_et.setText("");
                     if(TextUtils.isEmpty(phone_et.getText().toString()) || phone_et.getText().toString().length()!=10){
 
                         phone_et.setBackground(getDrawable(R.drawable.error_edittext_background));
@@ -96,6 +165,7 @@ public class VerifyPhone extends AppCompatActivity {
 
                         phone_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
 
+                        ccp = countryCodePicker.getSelectedCountryCode();
                         phoneNumber = "+"+countryCodePicker.getSelectedCountryCode()+phone_et.getText().toString();
 
                         verify_progress_bar.setVisibility(View.VISIBLE);
@@ -105,6 +175,19 @@ public class VerifyPhone extends AppCompatActivity {
 
                     }
 
+                }else{
+                    OTP = otp_et.getText().toString();
+                    if(TextUtils.isEmpty(OTP) || OTP.length()!=6){
+                        otp_et.setBackground(getDrawable(R.drawable.error_edittext_background));
+                        otp_et.setError("Enter Valid OTP");
+                    }else{
+
+                        verify_progress_bar.setVisibility(View.VISIBLE);
+                        verify_next_btn.setText("");
+                        otp_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
+                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId,OTP);
+                        signInWithPhoneAuthCredential(credential);
+                    }
                 }
             }
         });
@@ -126,6 +209,8 @@ public class VerifyPhone extends AppCompatActivity {
 
                 signInWithPhoneAuthCredential(credential);
             }
+
+
 
             @Override
             public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
@@ -152,6 +237,9 @@ public class VerifyPhone extends AppCompatActivity {
                 // ...
             }
 
+
+
+            @SuppressLint("SetTextI18n")
             @Override
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
@@ -160,14 +248,15 @@ public class VerifyPhone extends AppCompatActivity {
                 // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:" + verificationId);
                 verify_progress_bar.setVisibility(View.GONE);
-                phone_verify_page_layout.setVisibility(View.VISIBLE);
+                phone_verify_otp_layout.setVisibility(View.VISIBLE);
                 verify_next_btn.setEnabled(true);
                 verify_next_btn.setText("Verify");
+                resend_tv.setVisibility(View.INVISIBLE);
 
 
                 // Save verification ID and resending token so we can use them later
-                verificationId = verificationId;
-                token = token;
+                mVerificationId = verificationId;
+                mResendToken = token;
 
                 // ...
             }
@@ -175,15 +264,141 @@ public class VerifyPhone extends AppCompatActivity {
 
 
 
+
+
+
+        login_email_next_verify_now_btn=findViewById(R.id.login_email_next_verify_now_btn_id);
+        verify_email_progressBar=findViewById(R.id.login_email_verify_progressBar);
+
+
+
+
+        login_email_next_verify_now_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                verify_email_progressBar.setVisibility(View.VISIBLE);
+
+                login_email_next_verify_now_btn.setText("");
+
+                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        verify_email_progressBar.setVisibility(View.GONE);
+                        login_email_next_verify_now_btn.setEnabled(true);
+                        login_email_next_verify_now_btn.setText("Verify Now");
+
+
+                        email_verification_error_tv.setText("Email Verification link has been sent to your G-mail go and check and verify it");
+                        email_verification_error_tv.setTextColor(getColor(R.color.robert));
+                    }
+
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Log.d("error7","Error! "+e.getMessage());
+
+                    }
+                });
+
+
+            }
+        });
+
+
+
+        resend_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendVerificationCode(phoneNumber,mResendToken);
+            }
+        });
+
+
+
+        error_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                error_dialog.dismiss();
+            }
+        });
+
+
+
     }
+
+
 
 
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
 
+        firebaseAuth.getCurrentUser().linkWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+
+                resend_tv.setVisibility(View.GONE);
+                Toast.makeText(VerifyPhone.this, "Phone is verify now", Toast.LENGTH_SHORT).show();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("phone_number",firebaseAuth.getCurrentUser().getPhoneNumber());
+                hashMap.put("country_code",ccp);
+                ref.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).child("phone_number").setValue(firebaseAuth.getCurrentUser().getPhoneNumber())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        ref.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).child("country_code")
+                                .setValue(ccp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                startActivity(new Intent(VerifyPhone.this,User_Details.class));
+                                finish();
+                            }
+                        });
+                    }
+
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        verify_next_btn.setText("Next");
+                        resend_tv.setVisibility(View.VISIBLE);
+                        verify_progress_bar.setVisibility(View.GONE);
+                        error_content_tv.setText(e.getMessage());
+                        error_dialog.show();
+                    }
+                });
+
+
+
+                // send to dashboard.
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+
+                verify_next_btn.setText("Next");
+                resend_tv.setVisibility(View.VISIBLE);
+                verify_progress_bar.setVisibility(View.GONE);
+                error_content_tv.setText(e.getMessage());
+                error_dialog.show();
+
+
+            }
+        });
+
         Toast.makeText(this, "OTP fetched", Toast.LENGTH_SHORT).show();
 
     }
+
+
+
+
 
 
     private void sendOtp() {
@@ -198,4 +413,38 @@ public class VerifyPhone extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
 
     }
+
+
+
+
+
+    private void resendVerificationCode(String phoneNumber,
+                                        PhoneAuthProvider.ForceResendingToken token) {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(firebaseAuth)
+                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .setForceResendingToken(token)     // ForceResendingToken from callbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(userEmailVerified){
+            phone_verification_page.setVisibility(View.VISIBLE);
+            email_verification_page.setVisibility(View.GONE);
+
+        }
+    }
+
+
+
+
 }

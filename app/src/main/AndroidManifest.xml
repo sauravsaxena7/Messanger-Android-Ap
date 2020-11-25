@@ -9,20 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserProfile.CurrentUserProfile"></activity>
+        <activity android:name=".UserProfile.CurrentUserProfile">
+
+        </activity>
         <activity android:name=".UserHandle.SpalashBloodBank" >
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".UserDetails.User_Details" />
         <activity android:name=".UserHandle.Register" />
         <activity android:name=".UserHandle.Login">
 
         </activity>
-        <activity android:name=".UserHandle.VerifyPhone" />
+        <activity android:name=".UserHandle.VerifyPhone" >
+
+
+        </activity>
         <activity android:name=".MainActivity" />
     </application>
 

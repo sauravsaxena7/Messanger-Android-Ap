@@ -90,9 +90,9 @@ public class Register extends AppCompatActivity {
                 final String email = email_et.getText().toString();
                 final String password = password_et.getText().toString();
 
-                boolean isValidEmail = false;
-                boolean isValidUsername=false;
-                boolean isValidPass=false;
+                boolean isValidEmail;
+                boolean isValidUsername;
+                boolean isValidPass;
 
                 if(validateUserCredentials.isValidUserName(username_et,username.trim())){
 

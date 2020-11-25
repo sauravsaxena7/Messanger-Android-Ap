@@ -20,7 +20,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:elevation="24dp"
-        android:backgroundTint="#0f4c75"
+        android:backgroundTint="@color/main_stream_background_color"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="7dp"

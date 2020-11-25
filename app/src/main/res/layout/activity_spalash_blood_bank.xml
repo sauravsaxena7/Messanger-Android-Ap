@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="24dp"
-        android:backgroundTint="#0f4c75"
+        android:backgroundTint="@color/main_stream_background_color"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
         android:padding="7dp"
