@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:text="Next"
-                    android:backgroundTint="#2196F3"
+                    android:backgroundTint="#03A9F4"
                     android:padding="10dp"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"

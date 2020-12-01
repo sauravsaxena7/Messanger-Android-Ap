@@ -28,6 +28,21 @@ public class ValidateUserCredentials {
 
 
 
+    public boolean isValidUsernameOrEmail(EditText editText,String username_or_email){
+        boolean isValid = false;
+
+        if(TextUtils.isEmpty(username_or_email)){
+
+            editText.setError("This field is required");
+        }else if(username_or_email.contains("@")){
+           isValid= isValidEmailAddress(editText,username_or_email);
+        }else{
+            isValid=isValidUserName(editText,username_or_email);
+        }
+
+        return isValid;
+    }
+
 
     public  boolean isValidUserName(EditText editText, String username){
 

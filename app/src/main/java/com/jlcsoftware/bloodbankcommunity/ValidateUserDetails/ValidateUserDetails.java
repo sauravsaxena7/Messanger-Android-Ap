@@ -34,6 +34,7 @@ public class ValidateUserDetails {
 
 
 
+
     public boolean validLastName(MaterialEditText editText , String last_name){
 
         boolean isValid;
@@ -78,7 +79,7 @@ public class ValidateUserDetails {
         if(TextUtils.isEmpty(work_as)){
             isValid=false;
             editText.setError("Occupation cannot be empty");
-        }else if(work_as.length()<21){
+        }else if(work_as.length()>21){
             isValid=false;
             editText.setError("The length occupation is not more than 20");
         }else{

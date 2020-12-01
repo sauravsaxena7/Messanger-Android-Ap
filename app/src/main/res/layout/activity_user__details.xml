@@ -17,7 +17,7 @@
         tools:ignore="ScrollViewSize">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_upload_image"
+            android:id="@+id/user_details_upload_imageView"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="60dp"
@@ -27,7 +27,7 @@
 
 
         <ProgressBar
-            android:id="@+id/imageProgress"
+            android:id="@+id/user_details_imageProgressbar"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="-75dp"
@@ -40,7 +40,7 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_edit_buttton"
+            android:id="@+id/user_details_image_edit_button"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="40dp"

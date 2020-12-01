@@ -14,6 +14,8 @@ public class User_Details_Models {
                                String dob_year, String followers, String following, String verify_user, String verify_email) {
 
 
+
+
         this.username = username;
         this.userId = userId;
         this.first_name = first_name;
@@ -35,6 +37,8 @@ public class User_Details_Models {
         this.following = following;
         this.verify_user = verify_user;
         this.verify_email = verify_email;
+
+
 
 
 
