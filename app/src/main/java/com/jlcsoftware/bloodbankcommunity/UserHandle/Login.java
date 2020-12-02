@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.Model_user_details;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
@@ -293,7 +294,7 @@ public class Login extends AppCompatActivity {
                             }else{
 
                                 Toast.makeText(Login.this, "user login successfully!", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(Login.this, CurrentUserProfile.class));
+                                startActivity(new Intent(Login.this, MainActivity.class));
                                 finish();
                             }
                         }

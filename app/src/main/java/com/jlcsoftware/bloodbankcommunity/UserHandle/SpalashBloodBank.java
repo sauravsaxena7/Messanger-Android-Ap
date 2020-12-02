@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
 import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
@@ -62,7 +63,7 @@ public class SpalashBloodBank extends AppCompatActivity {
                                                 finish();
                                             }else{
 
-                                                startActivity(new Intent(SpalashBloodBank.this, CurrentUserProfile.class));
+                                                startActivity(new Intent(SpalashBloodBank.this, MainActivity.class));
                                                 finish();
                                             }
                                         }

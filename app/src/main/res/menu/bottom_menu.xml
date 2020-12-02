@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+    <item
+        android:id="@+id/settings"
+        android:title="settings"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+
+
+        android:icon="@drawable/settings"/>
+
+
+    <item
+        android:id="@+id/profile"
+        android:title="user profile"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/profile"/>
+
+    <item
+        android:id="@+id/search"
+        android:title="search"
+        android:icon="@drawable/search"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        />
+
+
+
+
+
+
+</menu>
