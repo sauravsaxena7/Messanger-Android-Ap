@@ -3,21 +3,18 @@ package com.jlcsoftware.bloodbankcommunity.UserDetails;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.DialogFragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
 
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -36,15 +33,20 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
 import com.jlcsoftware.bloodbankcommunity.R;
+import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserDetails;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -52,9 +54,10 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User_Details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
@@ -64,7 +67,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
     private Dialog blood_group_picker_dialog;
 
-    private RadioGroup radioGroup,gender_radio_button;
+    private RadioGroup radioGroup,gender_radio_group;
 
     public MaterialButton save_user_details_btn_id,error_btn;
 
@@ -81,7 +84,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
     private Bitmap bitmap;
 
-    private ProgressBar imgProgressBar;
+    private ProgressBar imgProgressBar,btn_progressbar;
 
     private FirebaseAuth firebaseAuth;
 
@@ -106,6 +109,10 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
         radioGroup = blood_group_picker_dialog.findViewById(R.id.blood_radioGroup);
 
+        gender_radio_group = findViewById(R.id.user_details_gender_radioGroup);
+
+        btn_progressbar = findViewById(R.id.user_details_progressBar);
+
 
 
 
@@ -121,7 +128,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        error_dialog=new Dialog(User_Details.this);
+        error_dialog = new Dialog(User_Details.this);
         error_dialog.setContentView(R.layout.error_dialog);
         error_content_tv=error_dialog.findViewById(R.id.error_content_tv);
         error_btn=error_dialog.findViewById(R.id.error_button_id);
@@ -204,6 +211,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
         ValidateUserDetails validateUserDetails = new ValidateUserDetails();
 
 
+
         save_user_details_btn_id = findViewById(R.id.save_user_details_btn_id);
         save_user_details_btn_id.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -216,6 +224,9 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
                 String current_address = current_address_et.getText().toString().trim();
                 String weight = weight_et.getText().toString().trim();
                 String work_as = work_as_et.getText().toString().trim();
+                String blood_group = blood_group_tv.getText().toString();
+                String gender_str=((RadioButton) findViewById(gender_radio_group.getCheckedRadioButtonId())).getText().toString();
+
 
 
 
@@ -283,7 +294,54 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
                 if(isValidCurrentAddress && isValidFirstName && isValidWeight && isValidWorkAs && isValidLastName && isValidBB && isValidDOB){
 
-                    Toast.makeText(User_Details.this, "okk", Toast.LENGTH_SHORT).show();
+                    btn_progressbar.setVisibility(View.VISIBLE);
+                    save_user_details_btn_id.setEnabled(false);
+                    save_user_details_btn_id.setText("");
+
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+
+                    Map<String ,Object> updateValues = new HashMap<>();
+
+
+
+                    updateValues.put("blood_group",blood_group);
+                    updateValues.put("current_address",current_address);
+                    updateValues.put("dob_date",dob);
+                    updateValues.put("dob_year",dob_year);
+                    updateValues.put("first_name",first_name);
+                    updateValues.put("last_name",last_name);
+                    updateValues.put("gender",gender_str);
+                    updateValues.put("img_uri",img_uri);
+                    updateValues.put("weight",weight);
+                    updateValues.put("work_as",work_as);
+
+                    reference.child("user_details")
+                            .child(firebaseAuth.getCurrentUser().getUid())
+                            .updateChildren(updateValues)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            startActivity(new Intent(User_Details.this, CurrentUserProfile.class));
+                            finish();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            error_content_tv.setText(e.getMessage());
+                            error_dialog.show();
+                            btn_progressbar.setVisibility(View.GONE);
+                            save_user_details_btn_id.setEnabled(true);
+                            save_user_details_btn_id.setText("Save Details");
+                        }
+                    });
+
+
+
+
 
                 }
 
@@ -392,20 +450,15 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
                 {
                     Uri downloadUri = task.getResult();
 
-                    float rotate = getExifAngle(User_Details.this,downloadUri);
+
 
                     img_uri=downloadUri.toString();
-
-//                    RequestOptions requestOptions = new RequestOptions();
-//                    requestOptions.placeholder(R.drawable.teamwork_symbol);
-//                    Glide.with(getApplicationContext())
-//                            .setDefaultRequestOptions(requestOptions)
-//                            .load(img_uri).into(user_upload_img);
 
 
                     Picasso.with(User_Details.this).load(img_uri).fit().centerCrop()
                             .placeholder(R.drawable.teamwork_symbol)
                             .into(user_upload_img);
+
 
 
                     browse_img.setEnabled(true);
@@ -423,65 +476,6 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
         });
 
 
-
-
-
-
-    }
-
-
-    @SuppressLint("ObsoleteSdkInt")
-    @Nullable
-    public ExifInterface getExifInterface(Context context, Uri uri) {
-        try {
-            String path = uri.toString();
-            if (path.startsWith("file://")) {
-                return new ExifInterface(path);
-            }
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                if (path.startsWith("content://")) {
-                    InputStream inputStream = context.getContentResolver().openInputStream(uri);
-                    return new ExifInterface(inputStream);
-                }
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-
-    public float getExifAngle(Context context, Uri uri) {
-        try {
-            ExifInterface exifInterface = getExifInterface(context, uri);
-            if(exifInterface == null) {
-                return -1f;
-            }
-
-            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
-
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    return 90f;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    return 180f;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    return 270f;
-                case ExifInterface.ORIENTATION_NORMAL:
-                    return 0f;
-                case ExifInterface.ORIENTATION_UNDEFINED:
-                    return -1f;
-                default:
-                    return -1f;
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return -1f;
-        }
     }
 
 

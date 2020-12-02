@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.jlcsoftware.bloodbankcommunity.Models.Model_user_details;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
 import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
@@ -170,8 +172,14 @@ public class Login extends AppCompatActivity {
                         login_email_next_btn.setEnabled(false);
                         signInWithEmailAndPassword(username_or_email,pass);
                     }else{
-                        Query query = FirebaseDatabase.getInstance().getReference("users").child("user_details");
 
+
+
+                        login_email_progress_bar.setVisibility(View.VISIBLE);
+                        login_email_next_btn.setText("");
+                        login_email_next_btn.setBackgroundColor(getColor(R.color.disable_color));
+                        login_email_next_btn.setEnabled(false);
+                        Query query = FirebaseDatabase.getInstance().getReference("users").child("user_details");
                         query.orderByChild("username").equalTo(username_or_email).addListenerForSingleValueEvent(new ValueEventListener() {
                             @SuppressLint("SetTextI18n")
                             @Override
@@ -179,18 +187,14 @@ public class Login extends AppCompatActivity {
                                 if (snapshot.exists()){
 
 
-                                    login_email_progress_bar.setVisibility(View.VISIBLE);
-                                    login_email_next_btn.setText("");
-                                    login_email_next_btn.setBackgroundColor(getColor(R.color.disable_color));
-                                    login_email_next_btn.setEnabled(false);
+                                    for(DataSnapshot ds : snapshot.getChildren()){
+                                        Model_user_details model_user_details = ds.getValue(Model_user_details.class);
+                                        if(model_user_details.getEmail()!=null){
+                                            signInWithEmailAndPassword(model_user_details.getEmail(),pass);
+                                        }
 
-                                    if(!TextUtils.isEmpty(snapshot.child("email").getValue(String.class))){
 
-                                        signInWithEmailAndPassword(snapshot.child("email").getValue(String.class),pass);
                                     }
-
-                                    Toast.makeText(Login.this, ""+snapshot.child("email").getValue(String.class), Toast.LENGTH_SHORT).show();
-
 
                                 }else{
                                     login_email_progress_bar.setVisibility(View.GONE);
@@ -276,15 +280,19 @@ public class Login extends AppCompatActivity {
                         if(snapshot.exists()){
                             if(snapshot.child("phone_number").getValue(String.class).equals("")){
 
+                                Toast.makeText(Login.this, "user login successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Login.this, VerifyPhone.class));
                                 finish();
 
                             }else if(snapshot.child("blood_group").getValue(String.class).equals("")){
 
+
+                                Toast.makeText(Login.this, "user login successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Login.this, User_Details.class));
                                 finish();
                             }else{
 
+                                Toast.makeText(Login.this, "user login successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Login.this, CurrentUserProfile.class));
                                 finish();
                             }

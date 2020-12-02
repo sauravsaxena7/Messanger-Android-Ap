@@ -39,6 +39,7 @@ import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -250,9 +251,11 @@ public class VerifyPhone extends AppCompatActivity {
                 Log.d(TAG, "onCodeSent:" + verificationId);
                 verify_progress_bar.setVisibility(View.GONE);
                 phone_verify_otp_layout.setVisibility(View.VISIBLE);
+                resend_tv.setVisibility(View.VISIBLE);
+                otp_et.setVisibility(View.VISIBLE);
+                Toast.makeText(VerifyPhone.this, "hiiii", Toast.LENGTH_SHORT).show();
                 verify_next_btn.setEnabled(true);
                 verify_next_btn.setText("Verify");
-                resend_tv.setVisibility(View.INVISIBLE);
 
 
                 // Save verification ID and resending token so we can use them later
@@ -311,6 +314,8 @@ public class VerifyPhone extends AppCompatActivity {
 
 
 
+
+
         resend_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -342,27 +347,25 @@ public class VerifyPhone extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
 
                 resend_tv.setVisibility(View.GONE);
-                Toast.makeText(VerifyPhone.this, "Phone is verify now", Toast.LENGTH_SHORT).show();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+                Toast.makeText(VerifyPhone.this, "Phone is verified now", Toast.LENGTH_SHORT).show();
 
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("phone_number",firebaseAuth.getCurrentUser().getPhoneNumber());
-                hashMap.put("country_code",ccp);
-                ref.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).child("phone_number").setValue(firebaseAuth.getCurrentUser().getPhoneNumber())
+
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                Map<String ,Object> updateValues = new HashMap<>();
+                updateValues.put("phone_number",firebaseAuth.getCurrentUser().getPhoneNumber());
+                updateValues.put("country_code",ccp);
+                updateValues.put("country_name",countryCodePicker.getSelectedCountryName());
+
+
+                reference.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).updateChildren(updateValues)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        ref.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).child("country_code")
-                                .setValue(ccp).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 startActivity(new Intent(VerifyPhone.this,User_Details.class));
                                 finish();
                             }
-                        });
-                    }
-
-                }).addOnFailureListener(new OnFailureListener() {
+                        }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
@@ -373,8 +376,6 @@ public class VerifyPhone extends AppCompatActivity {
                         error_dialog.show();
                     }
                 });
-
-
 
                 // send to dashboard.
             }

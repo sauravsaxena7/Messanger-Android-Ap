@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/phone_verification_page"
-                android:visibility="gone"
+                android:visibility="visible"
                 >
 
 
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/email_verification_page"
-                android:visibility="visible"
+                android:visibility="gone"
                 >
 
 

@@ -48,6 +48,15 @@ public class ValidateUserCredentials {
 
         boolean isValid=false;
         boolean isOnlyDigit = false;
+        boolean isCapital = false;
+        for(int i=0;i<username.length();i++){
+            if(username.charAt(i)>='A' && username.charAt(i)<='Z'){
+                isCapital =true;
+                break;
+            }
+        }
+
+
         if (TextUtils.isEmpty(username)){
 
             setError(editText,"Username Important");
@@ -87,7 +96,11 @@ public class ValidateUserCredentials {
                 isValid = false;
                 setError(editText,"Username cannot not contains only number");
 
-            }else {
+            }else if(isCapital){
+                isValid = false;
+                setError(editText,"Username cannot not contains Capital letters");
+
+            } else {
                 isValid=true;
                 drawableRight(editText);
             }

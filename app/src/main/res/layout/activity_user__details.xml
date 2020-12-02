@@ -299,21 +299,49 @@
         </LinearLayout>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_user_details_btn_id"
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_marginTop="36dp"
             android:layout_marginRight="24dp"
             android:layout_marginLeft="24dp"
-            android:padding="13dp"
-            android:textColor="#fff"
-            android:layout_marginBottom="34dp"
-            android:backgroundTint="#009688"
-            android:text="Save Details"
-            tools:targetApi="lollipop"
-            tools:ignore="HardcodedText" />
+            android:layout_marginBottom="10dp">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_user_details_btn_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Save Details"
+                android:backgroundTint="#009688"
+                android:padding="10dp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                tools:targetApi="lollipop"
+                tools:ignore="HardcodedText" />
+
+            <ProgressBar
+                android:id="@+id/user_details_progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:visibility="gone"
+                android:layout_alignStart="@+id/save_user_details_btn_id"
+                android:layout_alignLeft="@+id/save_user_details_btn_id"
+                android:layout_alignEnd="@+id/save_user_details_btn_id"
+                android:layout_alignRight="@+id/save_user_details_btn_id"
+                android:layout_marginStart="165dp"
+                android:layout_marginLeft="165dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="160dp"
+                android:layout_marginRight="160dp"
+                android:elevation="25dp"
+                android:indeterminateTint="#fff" />
+
+        </RelativeLayout>
+
 
 
 
