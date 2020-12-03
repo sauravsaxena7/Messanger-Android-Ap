@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             .replace(R.id.fragment_layout,selectedFragment).commit();
 
 
+
                     return true;
                 }
             };

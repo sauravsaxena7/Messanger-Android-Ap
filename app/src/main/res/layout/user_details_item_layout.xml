@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:id="@+id/linear_layout_contact_item">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/main_stream_background_color"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="25dp">
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/email_icon"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:text="sauravsrivastava121@gmail.com"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
