@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/main_stream_background_color"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".MainFragment.EditProfileFragment">
+
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+        <ProgressBar
+            android:id="@+id/edit_user_profile_progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="300dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:indeterminateTint="#FF5722"
+            />
+
+
+
+        <LinearLayout
+            android:id="@+id/edit_user_profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical"
+            tools:ignore="ScrollViewSize">
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/edit_user_profile_upload_imageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="todo"
+                android:src="@drawable/teamwork_symbol"
+                tools:ignore="HardcodedText,VectorDrawableCompat" />
+
+
+            <ProgressBar
+                android:id="@+id/edit_user_profile_imageProgressbar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="-75dp"
+                android:alpha="1"
+                android:visibility="invisible"
+                android:indeterminateTint="#FF5722"
+                android:layout_centerInParent="true"
+                tools:ignore="ObsoleteLayoutParam,UnusedAttribute" />
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/edit_user_profile_edit_image_icon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="-5dp"
+                android:contentDescription=""
+                android:src="@drawable/edit_camera_icon"
+                android:layout_marginStart="40dp"
+                tools:ignore="RtlHardcoded,VectorDrawableCompat" />
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_profile_username_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="20dp"
+
+                app:startIconTint="#FF9800"
+                app:boxStrokeColor="#9C27B0"
+
+
+                android:textColorHint="#fff"
+                app:hintTextColor="#ffffff"
+
+
+                app:startIconDrawable="@drawable/username_icon"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8BC34A"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_profile_first_name_et"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="20dp"
+
+                app:startIconTint="#FF9800"
+                app:boxStrokeColor="#9C27B0"
+
+
+                android:textColorHint="#fff"
+                app:hintTextColor="#ffffff"
+
+                app:startIconDrawable="@drawable/user_symbol"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8BC34A"
+                    android:maxLines="1"
+                    />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_profile_last_name_et"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="20dp"
+
+                app:startIconTint="#FF9800"
+                app:boxStrokeColor="#9C27B0"
+
+
+                android:textColorHint="#fff"
+                app:hintTextColor="#ffffff"
+
+                app:startIconDrawable="@drawable/user_symbol"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8BC34A"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_profile_current_address_et"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Current Address"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="20dp"
+
+                app:startIconTint="#FF9800"
+                app:boxStrokeColor="#9C27B0"
+
+
+                android:textColorHint="#fff"
+                app:hintTextColor="#ffffff"
+
+                app:startIconDrawable="@drawable/current_address"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8BC34A"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_profile_weight_et"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Weight"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="20dp"
+
+                app:startIconTint="#FF9800"
+                app:boxStrokeColor="#9C27B0"
+
+
+                android:textColorHint="#fff"
+                app:hintTextColor="#ffffff"
+
+                app:startIconDrawable="@drawable/weight_synbol"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8BC34A"
+                    android:maxLines="1"
+                    android:inputType="phone"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_profile_work_as_et"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Work As ?"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="20dp"
+
+                app:startIconTint="#FF9800"
+                app:boxStrokeColor="#9C27B0"
+
+
+                android:textColorHint="#fff"
+                app:hintTextColor="#ffffff"
+
+                app:startIconDrawable="@drawable/work_as_symbol"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8BC34A"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/edit_profile_blood_group_plus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="Blood Group +"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginLeft="28dp"
+                android:textColor="#FFF"
+                android:background="@drawable/simple_edit_input_background"
+                android:fontFamily="@font/opensansregular"
+                tools:ignore="HardcodedText" />
+
+
+            <TextView
+                android:id="@+id/edit_profile_date_of_birth_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="Date Of Birth."
+                android:layout_marginTop="33dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginLeft="28dp"
+                android:textColor="#FFF"
+                android:background="@drawable/simple_edit_input_background"
+                android:fontFamily="@font/opensansregular"
+                tools:ignore="HardcodedText" />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="33dp"
+                android:background="@drawable/simple_edit_input_background"
+                >
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Gender:"
+                    android:paddingBottom="2dp"
+                    android:textSize="18sp"
+                    android:textColor="#FFF"
+                    android:paddingStart="8dp"
+                    android:paddingLeft="8dp"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
+
+
+
+                <RadioGroup
+                    android:id="@+id/edit_profile_gender_radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:checkedButton="@+id/male_id"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                    <RadioButton
+                        android:id="@+id/edit_profile_male_id"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#FF5722"
+                        android:layout_weight="1"
+                        android:textColor="#FFF"
+                        android:text="Male"
+                        tools:targetApi="lollipop"
+                        tools:ignore="HardcodedText" />
+
+                    <RadioButton
+                        android:id="@+id/edit_profile_female_id"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#FF5722"
+                        android:layout_weight="1"
+                        android:textColor="#FFF"
+                        android:text="Female"
+                        tools:targetApi="lollipop"
+                        tools:ignore="HardcodedText" />
+
+                    <RadioButton
+                        android:id="@+id/edit_profile_custom_id"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#FF5722"
+                        android:layout_weight="1"
+                        android:text="Custom"
+                        android:textColor="#FFF"
+                        tools:targetApi="lollipop"
+                        tools:ignore="HardcodedText" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/blood_bank_logo"
+                    android:layout_gravity="center"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:text="Blood Bank"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:textColor="#CDDC39"
+                    android:fontFamily="serif-monospace"
+                    />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>
+
+
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#ffffff"
+    app:liftOnScroll="true"
+    android:elevation="8dp"
+    tools:targetApi="lollipop">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#063250"
+        android:id="@+id/edit_main_toolbar"
+        app:menu="@menu/edit_profile_menu"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/user_profile_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_marginLeft="5dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/current_user_image_id"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/edit_user_icon"
+                tools:ignore="VectorDrawableCompat"
+                android:layout_marginEnd="15dp" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+</com.google.android.material.appbar.AppBarLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

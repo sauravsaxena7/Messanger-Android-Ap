@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -79,7 +80,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_profile, container, false);
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+         View view=inflater.inflate(R.layout.fragment_profile, container, false);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -122,6 +127,7 @@ public class ProfileFragment extends Fragment {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
 
+
         reference.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -150,6 +156,8 @@ public class ProfileFragment extends Fragment {
 
 
                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
+
+
 
                 int birth_year= Integer.parseInt(dob_year);
 
@@ -199,7 +207,6 @@ public class ProfileFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.main_toolbar);
         setHasOptionsMenu(true);
-       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
 
 
@@ -211,7 +218,10 @@ public class ProfileFragment extends Fragment {
                 switch (item.getItemId()){
 
                     case R.id.edit_profile:
-                        Toast.makeText(getActivity(), "Edit profile", Toast.LENGTH_SHORT).show();
+                        //begin Transaction
+                       getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_layout,new EditProfileFragment()).addToBackStack(null).commit();
+
                         break;
 
                     case R.id.notification:

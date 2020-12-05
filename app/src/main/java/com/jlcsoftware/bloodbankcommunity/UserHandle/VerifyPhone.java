@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
+import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.KeyBoardServices;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.util.HashMap;
@@ -152,6 +153,8 @@ public class VerifyPhone extends AppCompatActivity {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
+                KeyBoardServices keyBoardServices = new KeyBoardServices();
+                keyBoardServices.hideKeyboardMethod(v,VerifyPhone .this);
                 if(verify_next_btn.getText().toString().equals("Next")){
                     resend_tv.setVisibility(View.GONE);
                     otp_et.setVisibility(View.GONE);
@@ -317,9 +320,31 @@ public class VerifyPhone extends AppCompatActivity {
 
 
         resend_tv.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                resendVerificationCode(phoneNumber,mResendToken);
+                if(TextUtils.isEmpty(phone_et.getText().toString()) || phone_et.getText().toString().length()!=10){
+
+                    phone_et.setBackground(getDrawable(R.drawable.error_edittext_background));
+                    phone_et.setError("Please enter a valid phone number");
+
+
+                }else{
+
+                    phone_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
+
+                    ccp = countryCodePicker.getSelectedCountryCode();
+                    phoneNumber = "+"+countryCodePicker.getSelectedCountryCode()+phone_et.getText().toString();
+
+
+                    phone_verify_otp_layout.setVisibility(View.GONE);
+                    verify_next_btn.setText("");
+                    verify_progress_bar.setVisibility(View.VISIBLE);
+                    resendVerificationCode(phoneNumber,mResendToken);
+
+                }
+
+
             }
         });
 

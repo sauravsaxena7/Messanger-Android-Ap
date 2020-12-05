@@ -7,13 +7,6 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 public class ValidateUserDetails {
 
 
-    public void setError(MaterialEditText editText, String msg){
-        editText.setError(msg);
-    }
-
-
-
-
     public boolean validFirstName(MaterialEditText editText , String first_name){
 
         boolean isValid;

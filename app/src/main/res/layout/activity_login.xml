@@ -200,6 +200,51 @@
                     android:fontFamily="@font/opensansregular"
                     tools:ignore="HardcodedText,RtlHardcoded,TextFields" />
 
+                <LinearLayout
+                    android:id="@+id/login_otp_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/login_otp_et"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:textColor="#ffF"
+                        android:textSize="14sp"
+                        android:background="@drawable/simple_edit_input_background"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:inputType="phone"
+                        android:textColorHint="#fff"
+                        android:hint="OTP"
+                        android:padding="13dp"
+                        android:maxLength="6"
+                        android:autofillHints="OTP"
+                        android:fontFamily="@font/opensansregular"
+                        tools:ignore="HardcodedText,RtlSymmetry" />
+
+
+                    <TextView
+                        android:id="@+id/login_resend_otp_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="13dp"
+                        android:textSize="14sp"
+                        android:text="Resend OTP"
+                        android:layout_marginRight="10dp"
+                        android:textColor="#fff"
+                        android:background="@drawable/simple_edit_input_background"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensansregular"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -243,49 +288,7 @@
                 </RelativeLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/login_otp_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/login_otp_et"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawablePadding="5dp"
-                        android:textColor="#ffF"
-                        android:textSize="14sp"
-                        android:background="@drawable/simple_edit_input_background"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:inputType="phone"
-                        android:textColorHint="#fff"
-                        android:hint="OTP"
-                        android:padding="13dp"
-                        android:maxLength="6"
-                        android:autofillHints="OTP"
-                        android:fontFamily="@font/opensansregular"
-                        tools:ignore="HardcodedText,RtlSymmetry" />
-
-
-                    <TextView
-                        android:id="@+id/login_resend_otp_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:padding="13dp"
-                        android:textSize="14sp"
-                        android:text="Resend OTP"
-                        android:layout_marginRight="10dp"
-                        android:textColor="#fff"
-                        android:background="@drawable/simple_edit_input_background"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/opensansregular"
-                        tools:ignore="HardcodedText" />
-
-                </LinearLayout>
 
 
 

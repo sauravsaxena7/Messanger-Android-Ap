@@ -38,11 +38,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 
+import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.R;
+import com.jlcsoftware.bloodbankcommunity.UserHandle.Login;
 import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
+import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.KeyBoardServices;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserDetails;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -90,6 +94,11 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
     private Dialog error_dialog;
     private TextView error_content_tv;
+
+
+    private StorageTask uploadTask;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,6 +225,9 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
             public void onClick(View view) {
 
 
+                KeyBoardServices keyBoardServices = new KeyBoardServices();
+                keyBoardServices.hideKeyboardMethod(view, User_Details.this);
+
                 String first_name = first_name_et.getText().toString().trim();
                 String last_name = last_name_et.getText().toString().trim();
                 String current_address = current_address_et.getText().toString().trim();
@@ -320,7 +332,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
                         @Override
                         public void onSuccess(Void aVoid) {
 
-                            startActivity(new Intent(User_Details.this, CurrentUserProfile.class));
+                            startActivity(new Intent(User_Details.this, MainActivity.class));
                             finish();
 
                         }
