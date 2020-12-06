@@ -629,7 +629,7 @@ public class EditProfileFragment extends Fragment {
 
 
 
-        Map<String ,Object> updateValues = new HashMap<>();
+        Map<String,Object> updateValues = new HashMap<>();
 
 
         updateValues.put("username",toUpdateUsername);
@@ -638,7 +638,7 @@ public class EditProfileFragment extends Fragment {
         updateValues.put("dob_date",dob);
         updateValues.put("dob_year",dob_year);
         updateValues.put("first_name",toUpdateFirst_Name);
-        updateValues.put("last_name",toUpdateFirst_Name);
+        updateValues.put("last_name",toUpdateLast_Name);
         updateValues.put("gender",gender);
         updateValues.put("img_uri",img_uri);
         updateValues.put("weight",toUpdateWeight);
