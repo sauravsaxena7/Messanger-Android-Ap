@@ -105,6 +105,7 @@ public class EditProfileFragment extends Fragment {
     private CircleImageView edit_img_icon,uploaded_image;
 
 
+    private DatabaseReference databaseReference_all;
 
     String img_uri_str;
     Uri img_uri;
@@ -147,6 +148,11 @@ public class EditProfileFragment extends Fragment {
         view=inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        databaseReference_all = FirebaseDatabase.getInstance()
+                .getReference("users");
+
+        databaseReference_all.keepSynced(true);
 
         toolbar = view.findViewById(R.id.edit_main_toolbar);
         setHasOptionsMenu(true);
@@ -201,7 +207,7 @@ public class EditProfileFragment extends Fragment {
                     case R.id.checked:
 
 
-                        if(isValidProfile()){
+                        if(isValidProfile() && (img_progress_bar.getVisibility() == View.INVISIBLE)){
 
                             if(username.equals(toUpdateUsername)){
                                 loading_dialog.show();
@@ -321,6 +327,15 @@ public class EditProfileFragment extends Fragment {
                 blood_group = snapshot.child("blood_group").getValue(String.class);
                 dob = snapshot.child("dob_date").getValue(String.class);
                 dob_year = snapshot.child("dob_year").getValue(String.class);
+                img_uri_str = snapshot.child("img_uri").getValue(String.class);
+
+                if(!img_uri_str.equals("")){
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.placeholder(R.drawable.teamwork_symbol);
+                    Glide.with(getActivity())
+                            .setDefaultRequestOptions(requestOptions)
+                            .load(img_uri_str).into(uploaded_image);
+                }
 
 
 
@@ -422,22 +437,9 @@ public class EditProfileFragment extends Fragment {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile Image of user");
         final StorageReference fileReference = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "profile.jpg");
 
-        Bitmap bmp = null;
-        try {
-            bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), img_uri);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
-
-        
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 10, baos);
-        byte[] data = baos.toByteArray();
-
-        StorageTask uploadTask = fileReference.putBytes(data);
+        StorageTask uploadTask = fileReference.putFile(img_uri);
 
 
 
@@ -460,12 +462,30 @@ public class EditProfileFragment extends Fragment {
                 {
                     Uri downloadUri = task.getResult();
                     img_uri_str=downloadUri.toString();
-                    RequestOptions requestOptions = new RequestOptions();
-                    requestOptions.placeholder(R.drawable.teamwork_symbol);
-                    Glide.with(getActivity())
-                            .setDefaultRequestOptions(requestOptions)
-                            .load(img_uri_str).into(uploaded_image);
-                    img_progress_bar.setVisibility(View.INVISIBLE);
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+
+                    Map<String,Object> updateValues = new HashMap<>();
+                    updateValues.put("img_uri",img_uri_str);
+
+                    reference.child("user_details")
+                            .child(firebaseAuth.getCurrentUser().getUid())
+                            .updateChildren(updateValues)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    RequestOptions requestOptions = new RequestOptions();
+                                    requestOptions.placeholder(R.drawable.teamwork_symbol);
+                                    Glide.with(getActivity())
+                                            .setDefaultRequestOptions(requestOptions)
+                                            .load(img_uri_str).into(uploaded_image);
+                                    img_progress_bar.setVisibility(View.INVISIBLE);
+
+                                }
+                            });
+
+
                 }
 
             }
@@ -640,9 +660,10 @@ public class EditProfileFragment extends Fragment {
         updateValues.put("first_name",toUpdateFirst_Name);
         updateValues.put("last_name",toUpdateLast_Name);
         updateValues.put("gender",gender);
-        updateValues.put("img_uri",img_uri);
+        updateValues.put("img_uri",img_uri_str);
         updateValues.put("weight",toUpdateWeight);
         updateValues.put("work_as",toUpdateWork_As);
+
 
 
         reference.child("user_details")

@@ -37,7 +37,6 @@ import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.Model_user_details;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
-import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.KeyBoardServices;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserCredentials;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserDetails;

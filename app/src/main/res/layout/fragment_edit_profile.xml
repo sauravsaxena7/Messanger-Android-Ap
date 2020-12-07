@@ -29,7 +29,6 @@ tools:context=".MainFragment.EditProfileFragment">
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="300dp"
-            android:visibility="gone"
             android:layout_gravity="center"
             android:indeterminateTint="#FF5722"
             />
@@ -95,6 +94,7 @@ tools:context=".MainFragment.EditProfileFragment">
 
                 app:startIconTint="#FF9800"
                 app:boxStrokeColor="#9C27B0"
+
 
 
                 android:textColorHint="#fff"
@@ -440,6 +440,7 @@ tools:context=".MainFragment.EditProfileFragment">
         android:background="#063250"
         android:id="@+id/edit_main_toolbar"
         app:menu="@menu/edit_profile_menu"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         >
 
 

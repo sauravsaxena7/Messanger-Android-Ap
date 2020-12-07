@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
-import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
 
 public class SpalashBloodBank extends AppCompatActivity {
 

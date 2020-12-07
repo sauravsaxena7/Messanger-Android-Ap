@@ -3,8 +3,8 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
+    android:background="#2b2b2b"
 android:layout_height="match_parent"
-    android:background="@color/main_stream_background_color"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 tools:context=".MainFragment.ProfileFragment">
 
@@ -23,6 +23,7 @@ tools:context=".MainFragment.ProfileFragment">
         android:gravity="center"
         android:layout_marginBottom="-170dp"
         android:orientation="vertical">
+
 
 
         <ProgressBar
@@ -171,7 +172,7 @@ tools:context=".MainFragment.ProfileFragment">
             </com.google.android.material.card.MaterialCardView>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/progile_image3"
+                android:id="@+id/profile_image"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:elevation="52dp"
@@ -190,39 +191,6 @@ tools:context=".MainFragment.ProfileFragment">
                 android:orientation="horizontal">
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/follow_following_btn"
-                    android:layout_width="0dp"
-                    android:textAllCaps="false"
-                    android:layout_height="wrap_content"
-                    android:text="Make Links"
-                    android:layout_weight="1"
-                    android:backgroundTint="#009688"
-                    android:textSize="12sp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:fontFamily="@font/opensansregular"
-                    tools:ignore="HardcodedText" />
-
-
-                <View
-                    android:layout_width="15dp"
-                    android:layout_height="wrap_content"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/message"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:textAllCaps="false"
-                    android:layout_height="wrap_content"
-                    android:text="Message"
-                    android:backgroundTint="#4CAF50"
-                    android:textSize="12sp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:fontFamily="@font/opensansregular"
-                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -285,6 +253,7 @@ tools:context=".MainFragment.ProfileFragment">
         android:background="#063250"
         android:id="@+id/main_toolbar"
         app:menu="@menu/profile_main_menu"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         >
 
 

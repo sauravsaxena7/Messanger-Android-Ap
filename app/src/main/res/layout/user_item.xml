@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#2b2b2b"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:id="@+id/linear_layout_contact_item">
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/row_user_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/teamwork_symbol"
+        android:layout_marginLeft="5dp"
+        tools:ignore="VectorDrawableCompat" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="12dp">
+
+
+        <TextView
+            android:id="@+id/row_user_username_tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="Username"
+            android:textColor="#fff"
+            android:drawablePadding="5dp"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+        <TextView
+            android:textColor="#fff"
+            android:padding="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile Namde"
+            android:id="@+id/row_user_profile_name_tv" />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

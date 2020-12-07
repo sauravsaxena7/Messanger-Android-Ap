@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,6 +67,9 @@ public class ProfileFragment extends Fragment {
 
     private Toolbar toolbar;
 
+    private CircleImageView profile_img;
+
+    private DatabaseReference databaseReference_all;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -90,6 +96,10 @@ public class ProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
+        databaseReference_all = FirebaseDatabase.getInstance()
+                .getReference("users");
+
+        databaseReference_all.keepSynced(true);
 
         logout_dialog=new Dialog(getActivity());
         logout_dialog.setContentView(R.layout.logout_dialog_layout);
@@ -117,6 +127,8 @@ public class ProfileFragment extends Fragment {
 
         profile_layout = view.findViewById(R.id.profile_layout);
         progressBar = view.findViewById(R.id.user_details_progressBar);
+
+        profile_img = view.findViewById(R.id.profile_image);
 
         fullName_tv = view.findViewById(R.id.user_profile_fullName);
         username_tv = view.findViewById(R.id.user_profile_username);
@@ -161,6 +173,14 @@ public class ProfileFragment extends Fragment {
                 String work_as = snapshot.child("work_as").getValue(String.class);
                 String current_address = snapshot.child("current_address").getValue(String.class);
 
+
+                if(!img_uri.equals("")){
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.placeholder(R.drawable.teamwork_symbol);
+                    Glide.with(getActivity())
+                            .setDefaultRequestOptions(requestOptions)
+                            .load(img_uri).into(profile_img);
+                }
 
                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
 

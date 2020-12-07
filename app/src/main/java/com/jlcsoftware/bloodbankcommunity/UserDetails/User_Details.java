@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 
@@ -44,8 +46,6 @@ import com.google.firebase.storage.UploadTask;
 
 import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.R;
-import com.jlcsoftware.bloodbankcommunity.UserHandle.Login;
-import com.jlcsoftware.bloodbankcommunity.UserProfile.CurrentUserProfile;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.KeyBoardServices;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserDetails;
 
@@ -81,7 +81,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
     private ImageView browse_img;
     private CircleImageView user_upload_img;
 
-    private Uri filepath;
+    private Uri imgUri;
 
     private Bitmap bitmap;
 
@@ -401,7 +401,7 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
         if(requestCode == 1024 && resultCode == RESULT_OK) {
             assert data != null;
-            filepath = data.getData();
+            imgUri = data.getData();
 
             try {
                 imgProgressBar.setVisibility(View.VISIBLE);
@@ -429,14 +429,10 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile Image of user");
         final StorageReference fileReference = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "profile.jpg");
 
-        Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filepath);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 10, baos);
-        byte[] data = baos.toByteArray();
 
         //uploading the image
-        UploadTask uploadTask = fileReference.putBytes(data);
+        UploadTask uploadTask = fileReference.putFile(imgUri);
 
 
         uploadTask.continueWithTask(new Continuation() {
@@ -463,11 +459,11 @@ public class User_Details extends AppCompatActivity implements DatePickerDialog.
 
                     img_uri=downloadUri.toString();
 
-
-                    Picasso.with(User_Details.this).load(img_uri).fit().centerCrop()
-                            .placeholder(R.drawable.teamwork_symbol)
-                            .into(user_upload_img);
-
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.placeholder(R.drawable.teamwork_symbol);
+                    Glide.with(User_Details.this)
+                            .setDefaultRequestOptions(requestOptions)
+                            .load(img_uri).into(user_upload_img);
 
 
                     browse_img.setEnabled(true);
