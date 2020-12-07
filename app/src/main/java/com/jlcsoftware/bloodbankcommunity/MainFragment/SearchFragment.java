@@ -60,6 +60,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     SearchView searchView;
 
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -75,6 +76,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         super.onCreate(savedInstanceState);
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -257,6 +260,18 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     @Override
     public void MakeLinksClickListener(int position) {
+
+    }
+
+    @Override
+    public void setOnItemClickListener(int position) {
+
+        UserProfileFragment userProfileFragment = new UserProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("userId",arrayList.get(position).getUserId());
+        userProfileFragment.setArguments(args);
+
+        getFragmentManager().beginTransaction().add(R.id.fragment_layout, userProfileFragment).addToBackStack(null).commit();
 
     }
 

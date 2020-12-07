@@ -17,7 +17,7 @@
         <activity android:name=".UserProfile.CurrentUserProfile">
 
         </activity>
-        <activity android:name=".UserHandle.SpalashBloodBank" >
+        <activity android:name=".UserHandle.SplashBloodBank" >
 
 
             <intent-filter>

@@ -20,7 +20,7 @@ import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
 
-public class SpalashBloodBank extends AppCompatActivity {
+public class SplashBloodBank extends AppCompatActivity {
 
     @SuppressLint("ObsoleteSdkInt")
     @Override
@@ -53,16 +53,16 @@ public class SpalashBloodBank extends AppCompatActivity {
                                         if(snapshot.exists()){
                                             if(snapshot.child("phone_number").getValue(String.class).equals("")){
 
-                                                startActivity(new Intent(SpalashBloodBank.this, VerifyPhone.class));
+                                                startActivity(new Intent(SplashBloodBank.this, VerifyPhone.class));
                                                 finish();
 
                                             }else if(snapshot.child("blood_group").getValue(String.class).equals("")){
 
-                                                startActivity(new Intent(SpalashBloodBank.this, User_Details.class));
+                                                startActivity(new Intent(SplashBloodBank.this, User_Details.class));
                                                 finish();
                                             }else{
 
-                                                startActivity(new Intent(SpalashBloodBank.this, MainActivity.class));
+                                                startActivity(new Intent(SplashBloodBank.this, MainActivity.class));
                                                 finish();
                                             }
                                         }
@@ -71,12 +71,12 @@ public class SpalashBloodBank extends AppCompatActivity {
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
 
-                                        Toast.makeText(SpalashBloodBank.this, "Error! "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SplashBloodBank.this, "Error! "+error.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
                     }else{
-                        startActivity(new Intent(SpalashBloodBank.this, Login.class));
+                        startActivity(new Intent(SplashBloodBank.this, Login.class));
                         finish();
                     }
 

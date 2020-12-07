@@ -44,12 +44,8 @@ public class Search_User_Adapters  extends RecyclerView.Adapter<Search_User_Adap
 
         final MyViewHolder myViewHolder = new MyViewHolder(view);
 
-        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, ""+myViewHolder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
 
 
 
@@ -105,6 +101,13 @@ public class Search_User_Adapters  extends RecyclerView.Adapter<Search_User_Adap
             username_tv = itemView.findViewById(R.id.row_user_username_tv_id);
             fullName_tv = itemView.findViewById(R.id.row_user_profile_name_tv);
             user_img = itemView.findViewById(R.id.row_user_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.setOnItemClickListener(getAdapterPosition());
+                }
+            });
 
 
         }

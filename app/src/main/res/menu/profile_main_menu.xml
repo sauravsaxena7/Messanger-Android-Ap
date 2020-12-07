@@ -9,13 +9,6 @@
         android:icon="@drawable/edit_pencil_icon"
         tools:ignore="HardcodedText" />
 
-    <item
-        android:title="Notification"
-        app:showAsAction="always"
-        android:icon="@drawable/notification"
-        android:id="@+id/notification"
-        tools:ignore="HardcodedText" />
-
 
     <item
         android:title="Message"

@@ -7,12 +7,10 @@
 
     <item
         android:id="@+id/settings"
-        android:title="settings"
+        android:title="Notification"
         app:showAsAction="ifRoom"
         android:enabled="true"
-
-
-        android:icon="@drawable/settings"/>
+        android:icon="@drawable/notification"/>
 
 
     <item

@@ -251,10 +251,6 @@ public class ProfileFragment extends Fragment {
 
                         break;
 
-                    case R.id.notification:
-                        Toast.makeText(getActivity(), "notification", Toast.LENGTH_SHORT).show();
-                        break;
-
                     case R.id.chat:
                         Toast.makeText(getActivity(), "chat messanging", Toast.LENGTH_SHORT).show();
                         break;
