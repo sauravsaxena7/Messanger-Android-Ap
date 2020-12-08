@@ -150,8 +150,9 @@
                                     android:textSize="14sp"
                                     tools:ignore="HardcodedText" />
 
+
                                 <TextView
-                                    android:id="@+id/following_user_followers_text"
+                                    android:id="@+id/user_profile_links_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingTop="15dp"
@@ -186,18 +187,20 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="230dp"
+                    android:background="@drawable/search_edit_text_backgrounf"
                     android:layout_gravity="center_horizontal"
+                    android:padding="20dp"
                     android:orientation="horizontal">
 
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/follow_following_btn"
+                        android:id="@+id/make_links_or_linked_btn"
                         android:layout_width="0dp"
                         android:textAllCaps="false"
                         android:layout_height="wrap_content"
                         android:text="Make Links"
                         android:layout_weight="1"
-                        android:backgroundTint="#009688"
+                        android:backgroundTint="#1C5D91"
                         android:textSize="12sp"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp"
@@ -217,7 +220,7 @@
                         android:textAllCaps="false"
                         android:layout_height="wrap_content"
                         android:text="Message"
-                        android:backgroundTint="#4CAF50"
+                        android:backgroundTint="#117E15"
                         android:textSize="12sp"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp"

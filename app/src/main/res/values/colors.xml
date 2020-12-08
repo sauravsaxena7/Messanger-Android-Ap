@@ -12,6 +12,16 @@
     <color name="red">#F44336</color>
     <color name="colorPrimaryDark">#072235</color>
     <color name="colorAccent">#009688</color>
+
+    <color name="link_sent">#852995</color>
+
+    <color name="make_links">#1C5D91</color>
+
+    <color name="Linked">#673AB7</color>
+
+
+    <color name="links_invititation">#673AB7</color>
+
     <color name="main_stream_background_color">#0f4c75</color>
 </resources>
 

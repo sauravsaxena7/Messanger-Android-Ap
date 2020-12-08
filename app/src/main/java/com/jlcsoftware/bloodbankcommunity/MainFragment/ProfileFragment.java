@@ -50,7 +50,8 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
 
-    private TextView username_tv,fullName_tv;
+    private TextView username_tv,fullName_tv,links_count_tv;
+
     private RecyclerView user_details_recyclerview;
 
 
@@ -69,7 +70,8 @@ public class ProfileFragment extends Fragment {
 
     private CircleImageView profile_img;
 
-    private DatabaseReference databaseReference_all;
+    private DatabaseReference databaseReference_all,link_ref;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -133,6 +135,12 @@ public class ProfileFragment extends Fragment {
         fullName_tv = view.findViewById(R.id.user_profile_fullName);
         username_tv = view.findViewById(R.id.user_profile_username);
 
+        links_count_tv = view.findViewById(R.id.profile_links_count);
+
+        link_ref = FirebaseDatabase.getInstance().getReference("AllLinks");
+
+
+
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -192,6 +200,9 @@ public class ProfileFragment extends Fragment {
                 String Age=String.valueOf(age);
 
 
+
+
+
                 //here we extract all details of profile of other user
                 detailsList=new ArrayList<>();
 
@@ -219,8 +230,22 @@ public class ProfileFragment extends Fragment {
                 user_details_recyclerview.setAdapter(recyclerViewAdapter);
 
 
-                progressBar.setVisibility(View.GONE);
-                profile_layout.setVisibility(View.VISIBLE);
+                link_ref.child(firebaseAuth.getCurrentUser().getUid()).child("Total_Links").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        links_count_tv.setText(String.valueOf(snapshot.getChildrenCount()));
+
+                        progressBar.setVisibility(View.GONE);
+                        profile_layout.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
 
             }

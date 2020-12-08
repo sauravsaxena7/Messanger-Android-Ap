@@ -213,12 +213,13 @@ public class Register extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
 
 
-                User_Details_Models userDetailsModels = new User_Details_Models(username,firebaseAuth.getCurrentUser().getUid(),
-                        "","","","",email,
-                        "",
+                User_Details_Models userDetailsModels = new User_Details_Models(username,
+                        firebaseAuth.getCurrentUser().getUid(),
+                        "","","","",
                         "","","",
-                        "","","","","",
-                        "","","","null","NO");
+                        "","","","","","","","","","");
+
+
 
 
 

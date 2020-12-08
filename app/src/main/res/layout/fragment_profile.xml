@@ -152,7 +152,7 @@ tools:context=".MainFragment.ProfileFragment">
                                 tools:ignore="HardcodedText" />
 
                             <TextView
-                                android:id="@+id/following_user_followers_text"
+                                android:id="@+id/profile_links_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="15dp"

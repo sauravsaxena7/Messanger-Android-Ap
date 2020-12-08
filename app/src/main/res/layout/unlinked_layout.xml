@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#0f4c75"
+        android:padding="10dp"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:id="@+id/unlinked_user_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:textColor="#fff"
+            android:src="@drawable/teamwork_symbol"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="21sp"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="10dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/unlinked_username_tv"
+            android:textSize="16sp"
+            android:textColor="#fff"
+            android:padding="14dp"
+            android:drawablePadding="5dp"
+            android:text="Username"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            >
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/unlinked_btn"
+                android:padding="11dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:backgroundTint="#F44336"
+                android:layout_height="wrap_content"
+                android:text="UnLinked"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                tools:targetApi="lollipop"
+                tools:ignore="HardcodedText" />
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/unLinked_never_btn"
+                android:padding="11dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:backgroundTint="#009688"
+                android:layout_height="wrap_content"
+                android:text="Never"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                tools:targetApi="lollipop"
+                tools:ignore="HardcodedText" />
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

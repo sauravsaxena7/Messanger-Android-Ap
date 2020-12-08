@@ -93,6 +93,7 @@ tools:context=".MainFragment.SearchFragment">
                 android:drawablePadding="11dp"
                 android:hint="search user"
                 android:padding="11dp"
+                android:maxLines="1"
                 android:background="@drawable/search_edit_text_backgrounf"
                 android:textColorHint="#fff"
                 android:drawableStart="@drawable/search_symbol"
