@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="5dp"
+    android:background="#2b2b2b"
+android:layout_marginRight="10dp"
+android:layout_marginLeft="10dp"
+android:layout_marginTop="10dp"
+android:id="@+id/linear_layout1_contact_item">
+
+
+
+<de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/row_user_image"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_marginStart="5dp"
+    android:src="@drawable/teamwork_symbol"
+    android:layout_marginLeft="5dp"
+    tools:ignore="VectorDrawableCompat" />
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical"
+    android:layout_marginLeft="12dp">
+
+
+
+
+    <TextView
+        android:id="@+id/row_user_username_tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:drawablePadding="5dp"
+        android:text="username"
+        android:textColor="#fff"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
+
+
+    <TextView
+        android:textColor="#fff"
+        android:padding="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="profile_name"
+        android:id="@+id/row_user_profile_name_tv" />
+
+</LinearLayout>
+<View
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"/>
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/make_links_or_linked_btn"
+        android:layout_width="105dp"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Make Links"
+        android:backgroundTint="#1C5D91"
+        android:textSize="10sp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="10dp"
+        tools:ignore="HardcodedText" />
+
+
+
+
+
+</LinearLayout>

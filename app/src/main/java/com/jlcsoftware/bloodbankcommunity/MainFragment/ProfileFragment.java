@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
@@ -72,6 +74,7 @@ public class ProfileFragment extends Fragment {
 
     private DatabaseReference databaseReference_all,link_ref;
 
+    LinearLayout links_linear_layout;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -98,10 +101,25 @@ public class ProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        databaseReference_all = FirebaseDatabase.getInstance()
-                .getReference("users");
 
-        databaseReference_all.keepSynced(true);
+
+
+        links_linear_layout = view.findViewById(R.id.links_linear_layout);
+
+        links_linear_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LinkedListFragment linkedListFragment = new  LinkedListFragment();
+                Bundle args = new Bundle();
+                args.putString("userId",firebaseAuth.getCurrentUser().getUid());
+
+                linkedListFragment.setArguments(args);
+
+                getFragmentManager().beginTransaction().add(R.id.fragment_layout, linkedListFragment).addToBackStack(null).commit();
+            }
+        });
+
 
         logout_dialog=new Dialog(getActivity());
         logout_dialog.setContentView(R.layout.logout_dialog_layout);
@@ -147,6 +165,7 @@ public class ProfileFragment extends Fragment {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
 
+        reference.keepSynced(true);
 
         reference.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -188,6 +207,9 @@ public class ProfileFragment extends Fragment {
                     Glide.with(getActivity())
                             .setDefaultRequestOptions(requestOptions)
                             .load(img_uri).into(profile_img);
+
+
+
                 }
 
                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
@@ -301,5 +323,8 @@ public class ProfileFragment extends Fragment {
         inflater.inflate(R.menu.profile_main_menu,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+
+
 
 }

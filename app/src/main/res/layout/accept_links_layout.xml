@@ -51,6 +51,7 @@
             android:drawablePadding="5dp"
             android:text="Username"
 
+            android:fontFamily="@font/opensansregular"
             tools:ignore="HardcodedText" />
 
 
@@ -89,7 +90,7 @@
                 android:textColor="#FFFFFF"
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
-                android:backgroundTint="#F44336"
+                android:backgroundTint="#9F0E04"
                 android:layout_height="wrap_content"
                 android:text="Delete Requested Links"
                 android:textSize="12sp"
@@ -105,7 +106,7 @@
                 android:textColor="#FFFFFF"
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
-                android:backgroundTint="#E91E63"
+                android:backgroundTint="#5A0468"
                 android:layout_height="wrap_content"
                 android:text="Not For Now"
                 android:textSize="12sp"

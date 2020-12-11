@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:background="#2b2b2b"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".MainFragment.LinkedListFragment">
+
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginBottom="-170dp"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/no_user_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No user found."
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:fontFamily="@font/opensansregular"
+            android:textColor="#fff"
+            tools:ignore="HardcodedText" />
+
+
+        <ProgressBar
+            android:id="@+id/user_search_progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="300dp"
+            android:visibility="visible"
+            android:indeterminateTint="@color/red"
+            />
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/users_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#ffffff"
+    app:liftOnScroll="true"
+    android:elevation="8dp"
+    tools:targetApi="lollipop">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#063250"
+        android:id="@+id/search_main_toolbar"
+        app:menu="@menu/linked_list_menu"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/link_list_count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="11dp"
+                android:padding="11dp"
+                android:textColorHint="#fff"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Linked List Count"
+                android:layout_marginLeft="5dp"
+                tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
+
+
+            <TextView
+                android:id="@+id/link_list_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="11dp"
+                android:padding="11dp"
+                android:textColorHint="#fff"
+                android:layout_gravity="center_vertical"
+                android:textColor="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:textSize="14sp"
+                android:text="Linked List"
+                tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+</com.google.android.material.appbar.AppBarLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

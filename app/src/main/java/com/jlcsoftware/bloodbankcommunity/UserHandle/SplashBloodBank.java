@@ -46,6 +46,7 @@ public class SplashBloodBank extends AppCompatActivity {
                     if(FirebaseAuth.getInstance().getCurrentUser()!=null){
 
                         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+                        ref.keepSynced(true);
                         ref.child("user_details").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override

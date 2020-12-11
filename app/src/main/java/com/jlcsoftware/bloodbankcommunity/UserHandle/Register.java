@@ -215,8 +215,7 @@ public class Register extends AppCompatActivity {
 
                 User_Details_Models userDetailsModels = new User_Details_Models(username,
                         firebaseAuth.getCurrentUser().getUid(),
-                        "","","","",
-                        "","","",
+                        "","","","", firebaseAuth.getCurrentUser().getEmail(),"","",
                         "","","","","","","","","","");
 
 

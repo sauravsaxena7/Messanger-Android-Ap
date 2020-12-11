@@ -135,7 +135,7 @@ tools:context=".MainFragment.ProfileFragment">
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/followers_linear_layout"
+                            android:id="@+id/links_linear_layout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

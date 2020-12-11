@@ -55,7 +55,6 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
 
 
-    implementation "com.android.support:exifinterface:27.1.1"
 
 
 

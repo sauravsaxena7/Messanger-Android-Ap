@@ -2,6 +2,7 @@ package com.jlcsoftware.bloodbankcommunity.MainFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.RecyclerViewAdapter;
+import com.jlcsoftware.bloodbankcommunity.ChatApplication.ChatActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.User_details_item;
 import com.jlcsoftware.bloodbankcommunity.R;
 
@@ -39,9 +41,9 @@ import com.jlcsoftware.bloodbankcommunity.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.Objects;
 
 
 public class UserProfileFragment extends Fragment {
@@ -64,9 +66,15 @@ public class UserProfileFragment extends Fragment {
     private DatabaseReference databaseReference_all,linksRequest,link_ref;
 
 
-    private MaterialButton make_links,cancel_request_btn,never_btn,accept_links_btn ,delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn;
+    private MaterialButton make_links,message_btn,
+            cancel_request_btn,never_btn,accept_links_btn ,
+            delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn;
 
 
+
+
+
+    private LinearLayout links_linear_layout;
     String userId;
 
     private Dialog cancel_request_dialog,accept_dialog,unlinked_dialog;
@@ -75,6 +83,7 @@ public class UserProfileFragment extends Fragment {
 
 
 
+    private DatabaseReference notificationRef;
 
 
     public UserProfileFragment() {
@@ -100,6 +109,8 @@ public class UserProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
+
+
         cancel_request_dialog=new Dialog(getActivity());
         cancel_request_dialog.setContentView(R.layout.cancel_request_layout);
 
@@ -110,6 +121,7 @@ public class UserProfileFragment extends Fragment {
 
         unlinked_dialog = new Dialog(getActivity());
         unlinked_dialog.setContentView(R.layout.unlinked_layout);
+
 
 
 
@@ -176,6 +188,11 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                make_links.setBackgroundColor(getResources().getColor(R.color.browser_actions_title_color,null));
+                make_links.setEnabled(false);
+                accept_dialog.dismiss();
+                cancel_Request();
+
             }
         });
 
@@ -225,11 +242,6 @@ public class UserProfileFragment extends Fragment {
 
 
 
-        linksRequest = FirebaseDatabase.getInstance()
-                .getReference("All_Links_Request").child("links_request");
-
-        link_ref = FirebaseDatabase.getInstance().getReference("AllLinks");
-
 
         links_count_tv = view.findViewById(R.id.user_profile_links_count);
 
@@ -237,6 +249,20 @@ public class UserProfileFragment extends Fragment {
 
 
         databaseReference_all.keepSynced(true);
+
+
+
+        linksRequest = FirebaseDatabase.getInstance()
+                .getReference("All_Links_Request").child("links_request");
+
+        link_ref = FirebaseDatabase.getInstance().getReference("AllLinks");
+
+        notificationRef = FirebaseDatabase.getInstance().getReference().child("notifications");
+
+
+
+
+
 
 
         profile_layout = view.findViewById(R.id.profile_layout);
@@ -284,7 +310,38 @@ public class UserProfileFragment extends Fragment {
 
 
 
+        message_btn = view.findViewById(R.id.message_btn);
 
+        message_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("userId",userId);
+                startActivity(intent);
+
+            }
+        });
+
+
+        links_linear_layout = view.findViewById(R.id.links_linear_layout);
+
+        links_linear_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LinkedListFragment linkedListFragment = new  LinkedListFragment();
+                Bundle args = new Bundle();
+                args.putString("userId",userId);
+
+                linkedListFragment.setArguments(args);
+
+                getFragmentManager().beginTransaction().add(R.id.fragment_layout, linkedListFragment).addToBackStack(null).commit();
+            }
+        });
+
+
+        reference.keepSynced(true);
 
         reference.child("user_details").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "CheckResult"})
@@ -433,7 +490,7 @@ public class UserProfileFragment extends Fragment {
                 if(make_links.getText().toString().trim().equals("Make Links")){
 
 
-                    make_links.setBackgroundColor(getResources().getColor(R.color.browser_actions_title_color,null));
+                    make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.browser_actions_title_color,null));
                     make_links.setEnabled(false);
                     sendLinks();
 
@@ -465,7 +522,7 @@ public class UserProfileFragment extends Fragment {
     private void mainTainButton_Button_State_Resolution() {
 
 
-        linksRequest.child(firebaseAuth.getCurrentUser().getUid())
+        linksRequest.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
                     @Override
@@ -475,10 +532,10 @@ public class UserProfileFragment extends Fragment {
                             String request_type = snapshot.child(userId).child("request_type").getValue(String.class);
 
                             if(request_type.equals("sent")){
-                                make_links.setBackgroundColor(getResources().getColor(R.color.link_sent,null));
+                                make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.link_sent,null));
                                 make_links.setText("Links Sent");
                             } else if(request_type.equals("received")){
-                                make_links.setBackgroundColor(getResources().getColor(R.color.links_invititation,null));
+                                make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.links_invititation,null));
                                 make_links.setText("Invitations");
                             }
                             else{
@@ -499,7 +556,7 @@ public class UserProfileFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                     if(snapshot.exists()){
-                                        make_links.setBackgroundColor(getResources().getColor(R.color.Linked,null));
+                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.Linked,null));
                                         make_links.setText("Linked");
 
                                         progressBar.setVisibility(View.GONE);
@@ -547,9 +604,29 @@ public class UserProfileFragment extends Fragment {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        make_links.setBackgroundColor(getResources().getColor(R.color.link_sent,null));
-                                        make_links.setEnabled(true);
-                                        make_links.setText("Links Sent");
+
+                                        HashMap<String,String> notification = new HashMap<>();
+                                        notification.put("from",firebaseAuth.getCurrentUser().getUid());
+                                        notification.put("type","request");
+
+
+
+                                        notificationRef.child(userId).push().setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                                make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.link_sent,null));
+                                                make_links.setEnabled(true);
+                                                make_links.setText("Links Sent");
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
+
                                     }
                                 });
                     }
@@ -567,7 +644,7 @@ public class UserProfileFragment extends Fragment {
     private void cancel_Request() {
 
 
-        linksRequest.child(firebaseAuth.getCurrentUser().getUid())
+        linksRequest.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
                 .child(userId).child("request_type")
                 .removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -581,7 +658,7 @@ public class UserProfileFragment extends Fragment {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        make_links.setBackgroundColor(getResources().getColor(R.color.make_links,null));
+                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
                                         make_links.setEnabled(true);
                                         make_links.setText("Make Links");
                                     }
@@ -628,7 +705,7 @@ public class UserProfileFragment extends Fragment {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
 
-                                                                make_links.setBackgroundColor(getResources().getColor(R.color.Linked,null));
+                                                                make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.Linked,null));
                                                                 make_links.setEnabled(true);
                                                                 make_links.setText("Linked");
                                                                 link_ref.child(userId).child("Total_Links").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -689,7 +766,7 @@ public class UserProfileFragment extends Fragment {
                                     public void onSuccess(Void aVoid) {
 
                                         make_links.setText("Make Links");
-                                        make_links.setBackgroundColor(getResources().getColor(R.color.make_links,null));
+                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
                                         make_links.setEnabled(true);
                                         link_ref.child(userId).child("Total_Links").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override

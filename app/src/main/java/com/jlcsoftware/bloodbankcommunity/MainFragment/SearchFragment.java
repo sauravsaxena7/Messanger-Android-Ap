@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -259,7 +261,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     @Override
-    public void MakeLinksClickListener(int position) {
+    public void MakeLinksClickListener(int position, MaterialButton make_links) {
 
     }
 
@@ -274,6 +276,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         getFragmentManager().beginTransaction().add(R.id.fragment_layout, userProfileFragment).addToBackStack(null).commit();
 
     }
+
+
+
 
 
 }
