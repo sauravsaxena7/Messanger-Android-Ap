@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -251,6 +252,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
 
 
+
         getAllLinkedUsers();
 
 
@@ -306,6 +308,8 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
     @Override
     public void MakeLinksClickListener(int position, MaterialButton make_links2) {
+
+
 
         make_links=make_links2;
         userId = arrayList.get(position).getUserId();
@@ -560,5 +564,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
         });
 
     }
+
+
 
 }

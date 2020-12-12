@@ -61,6 +61,8 @@ public class Login extends AppCompatActivity {
     private Dialog error_dialog;
     private TextView error_content_tv;
 
+
+
     private FirebaseAuth firebaseAuth;
 
     private CountryCodePicker countryCodePicker;
@@ -451,7 +453,7 @@ public class Login extends AppCompatActivity {
 
 
 
-        firebaseAuth.signInWithEmailAndPassword(username_or_email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+         firebaseAuth.signInWithEmailAndPassword(username_or_email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
 
             @Override
             public void onSuccess(AuthResult authResult) {

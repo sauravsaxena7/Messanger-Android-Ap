@@ -32,7 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.RecyclerViewAdapter;
-import com.jlcsoftware.bloodbankcommunity.ChatApplication.ChatActivity;
+
+import com.jlcsoftware.bloodbankcommunity.ChatActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.User_details_item;
 import com.jlcsoftware.bloodbankcommunity.R;
 
@@ -75,7 +76,7 @@ public class UserProfileFragment extends Fragment {
 
 
     private LinearLayout links_linear_layout;
-    String userId;
+    String userId,img_uri,username;
 
     private Dialog cancel_request_dialog,accept_dialog,unlinked_dialog;
 
@@ -176,9 +177,6 @@ public class UserProfileFragment extends Fragment {
                 make_links.setBackgroundColor(getResources().getColor(R.color.browser_actions_title_color,null));
                 accept_dialog.dismiss();
                 acceptLinks();
-
-
-
             }
         });
 
@@ -310,18 +308,6 @@ public class UserProfileFragment extends Fragment {
 
 
 
-        message_btn = view.findViewById(R.id.message_btn);
-
-        message_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("userId",userId);
-                startActivity(intent);
-
-            }
-        });
 
 
         links_linear_layout = view.findViewById(R.id.links_linear_layout);
@@ -350,7 +336,7 @@ public class UserProfileFragment extends Fragment {
 
                 String first_name = snapshot.child("first_name").getValue(String.class);
                 String last_name = snapshot.child("last_name").getValue(String.class);
-                String username = snapshot.child("username").getValue(String.class);
+                username = snapshot.child("username").getValue(String.class);
 
 
 
@@ -381,7 +367,7 @@ public class UserProfileFragment extends Fragment {
                 String gender = snapshot.child("gender").getValue(String.class);
                 String phone_number = firebaseAuth.getCurrentUser().getPhoneNumber();
                 String weight = snapshot.child("weight").getValue(String.class);
-                String img_uri = snapshot.child("img_uri").getValue(String.class);
+                img_uri = snapshot.child("img_uri").getValue(String.class);
                 String work_as = snapshot.child("work_as").getValue(String.class);
                 String current_address = snapshot.child("current_address").getValue(String.class);
 
@@ -511,6 +497,23 @@ public class UserProfileFragment extends Fragment {
 
 
 
+
+        message_btn = view.findViewById(R.id.message_btn);
+
+        message_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+
+                intent.putExtra("userId",userId);
+                intent.putExtra("img_uri",img_uri);
+                intent.putExtra("username",username);
+
+                startActivity(intent);
+
+            }
+        });
 
 
         return view;

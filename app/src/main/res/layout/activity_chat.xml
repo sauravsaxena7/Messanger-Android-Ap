@@ -1,74 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#2b2b2b"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".ChatApplication.ChatActivity">
-
-
-<androidx.core.widget.NestedScrollView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+    android:background="#2b2b2b"
+    android:orientation="vertical"
+    tools:context=".ChatActivity">
 
 
-
-
-
-
-
-</androidx.core.widget.NestedScrollView>
-
-
-<com.google.android.material.appbar.AppBarLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:backgroundTint="#ffffff"
-    app:liftOnScroll="true"
-    android:elevation="8dp"
-    tools:targetApi="lollipop">
-
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#063250"
-        android:id="@+id/chat_toolbar"
-        app:menu="@menu/chat_menu"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        app:contentInsetStartWithNavigation="0dp"
-        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-        >
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="#063250"
+            android:layout_alignParentTop="true"
+            android:fitsSystemWindows="true"
+            android:id="@+id/main_toolbar"
+            app:menu="@menu/profile_main_menu"
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/chat_user_image_id"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/teamwork_symbol"
-                tools:ignore="RtlHardcoded,VectorDrawableCompat"
-               />
-
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            >
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/chat_user_profile_username"
+                    android:id="@+id/user_profile_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="username"
@@ -78,45 +44,84 @@ tools:context=".ChatApplication.ChatActivity">
                     android:textColor="#fff"
                     android:fontFamily="@font/opensansregular"
                     android:textStyle="bold"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/chat_user_online_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Online"
-                    android:padding="3dp"
-                    android:drawablePadding="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="#fff"
-                    android:textSize="12sp"
+                    android:textSize="17sp"
                     android:layout_marginLeft="5dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/current_user_image_id"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/edit_user_icon"
+                    tools:ignore="VectorDrawableCompat"
+                    android:layout_marginEnd="15dp" />
 
 
             </LinearLayout>
 
+        </androidx.appcompat.widget.Toolbar>
 
 
+        <RelativeLayout
+            android:background="#2b2b2b"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/chat_bg"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:src="@drawable/add"
+            />
 
+        <EditText
+            android:id="@+id/messageET"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:textSize="14sp"
+            android:padding="7dp"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:fontFamily="@font/opensansregular"
+            android:hint="Message..."
+            android:maxLines="2">
 
+        </EditText>
 
+        <ImageView
+            android:id="@+id/sendBtn"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:src="@drawable/send"
+            />
 
+    </LinearLayout>
 
-
-    </androidx.appcompat.widget.Toolbar>
-
-
-
-
-
-</com.google.android.material.appbar.AppBarLayout>
-
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
