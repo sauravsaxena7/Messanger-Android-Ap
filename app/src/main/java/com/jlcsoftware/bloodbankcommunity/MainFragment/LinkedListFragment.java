@@ -316,9 +316,6 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
         if(make_links.getText().toString().trim().equals("Make Links")){
 
-
-            make_links.setBackgroundColor(getResources().getColor(R.color.browser_actions_title_color,null));
-            make_links.setEnabled(false);
             sendLinks();
 
 
@@ -404,6 +401,10 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
 
     private void sendLinks() {
+
+        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.link_sent,null));
+        make_links.setEnabled(true);
+        make_links.setText("Links Sent");
         linksRequest.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
                 .child(userId).child("request_type")
                 .setValue("sent")
@@ -417,9 +418,6 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.link_sent,null));
-                                        make_links.setEnabled(true);
-                                        make_links.setText("Links Sent");
                                     }
                                 });
                     }
@@ -437,6 +435,10 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
     private void cancel_Request() {
 
 
+        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
+        make_links.setEnabled(true);
+        make_links.setText("Make Links");
+
         linksRequest.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
                 .child(userId).child("request_type")
                 .removeValue()
@@ -451,9 +453,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
-                                        make_links.setEnabled(true);
-                                        make_links.setText("Make Links");
+
                                     }
                                 });
                     }
@@ -468,6 +468,10 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
 
     private void acceptLinks() {
+
+        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.Linked,null));
+        make_links.setEnabled(true);
+        make_links.setText("Linked");
 
         link_ref.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).child("Total_Links").child(userId)
                 .child("userId").setValue(userId)
@@ -494,9 +498,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
                                                                     @Override
                                                                     public void onSuccess(Void aVoid) {
 
-                                                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.Linked,null));
-                                                                        make_links.setEnabled(true);
-                                                                        make_links.setText("Linked");
+
 
                                                                     }
                                                                 });
@@ -529,6 +531,9 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
     private void unLinkedThisAccount() {
 
 
+        make_links.setText("Make Links");
+        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
+        make_links.setEnabled(true);
 
         link_ref.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).child("Total_Links")
                 .child(userId).removeValue()
@@ -541,9 +546,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        make_links.setText("Make Links");
-                                        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
-                                        make_links.setEnabled(true);
+
 
 
 
