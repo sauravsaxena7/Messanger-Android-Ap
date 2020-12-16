@@ -40,6 +40,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.RecyclerViewAdapter;
 import com.jlcsoftware.bloodbankcommunity.Models.User_details_item;
+import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserLinkedList;
+import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserProfile;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserHandle.Login;
 import com.jlcsoftware.bloodbankcommunity.UserHandle.Register;
@@ -110,13 +112,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                LinkedListFragment linkedListFragment = new  LinkedListFragment();
-                Bundle args = new Bundle();
-                args.putString("userId",firebaseAuth.getCurrentUser().getUid());
-
-                linkedListFragment.setArguments(args);
-
-                getFragmentManager().beginTransaction().add(R.id.fragment_layout, linkedListFragment).addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), UserLinkedList.class);
+                intent.putExtra("userId",firebaseAuth.getCurrentUser().getUid());
+                getActivity().overridePendingTransition( 0, 0);
+                startActivity(intent);
+                getActivity().overridePendingTransition( 0, 0);
             }
         });
 

@@ -7,9 +7,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@null</item>
 
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowDisablePreview">true</item>
+
+
     </style>
 
+    <style name="MyOverflowButtonStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorControlNormal">#fff</item>
 
+    </style>
 </resources>

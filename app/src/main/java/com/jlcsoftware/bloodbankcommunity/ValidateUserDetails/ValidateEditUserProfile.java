@@ -179,9 +179,9 @@ public class ValidateEditUserProfile {
         if(TextUtils.isEmpty(weight)){
             isValid=false;
             editText.getEditText().setError("Weight cannot be empty");
-        }else if(weight.length()>4){
+        }else if(weight.contains(".")){
             isValid=false;
-            editText.getEditText().setError("The length weight is not more than 3");
+            editText.getEditText().setError("not a valid weight");
         }else if(Integer.parseInt(weight)>221){
             editText.getEditText().setError("Your weight is very large please reduce it");
             isValid=false;

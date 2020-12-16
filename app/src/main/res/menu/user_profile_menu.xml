@@ -5,6 +5,12 @@
 
 
 
+    <item
+        android:title="Refresh"
+        android:id="@+id/refresh"
+        app:showAsAction="never"
+        android:icon="@drawable/more_icon"
+        tools:ignore="HardcodedText" />
 
 
 

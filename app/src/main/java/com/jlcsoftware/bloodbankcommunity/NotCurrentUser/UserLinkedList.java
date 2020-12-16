@@ -1,22 +1,19 @@
-package com.jlcsoftware.bloodbankcommunity.MainFragment;
-
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.os.Bundle;
+package com.jlcsoftware.bloodbankcommunity.NotCurrentUser;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import android.view.LayoutInflater;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +24,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,16 +31,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.Links_Adapter;
 import com.jlcsoftware.bloodbankcommunity.Interface.RecyclerViewClickListener;
+import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.Links_Model;
 import com.jlcsoftware.bloodbankcommunity.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 
-
-public class LinkedListFragment extends Fragment implements RecyclerViewClickListener {
+public class UserLinkedList extends AppCompatActivity implements RecyclerViewClickListener {
 
 
     ArrayList<Links_Model> arrayList;
@@ -69,30 +63,19 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
     private MaterialButton make_links,cancel_request_btn,never_btn,accept_links_btn ,delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn;
 
-    public LinkedListFragment() {
-        // Required empty public constructor
-    }
 
-
+    private Toolbar toolbar;
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        setContentView(R.layout.activity_user_linked_list);
 
 
 
-        View view=inflater.inflate(R.layout.fragment_linked_list, container, false);
-
-        recyclerView = view.findViewById(R.id.users_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = findViewById(R.id.users_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(UserLinkedList.this));
         recyclerView.setHasFixedSize(true);
 
 
@@ -102,9 +85,9 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
         linksRequest = FirebaseDatabase.getInstance()
                 .getReference("All_Links_Request").child("links_request");
 
-        links_count = view.findViewById(R.id.link_list_count_tv);
+        links_count = findViewById(R.id.link_list_count_tv);
 
-        userId2 = getArguments().getString("userId");
+        userId2 = getIntent().getStringExtra("userId");
 
 
         link_ref.child(userId2).child("Total_Links").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -119,21 +102,21 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
             }
         });
 
-        no_user_found = view.findViewById(R.id.no_user_found);
-        search_progressBar = view.findViewById(R.id.user_search_progressBar);
+        no_user_found = findViewById(R.id.no_user_found);
+        search_progressBar = findViewById(R.id.user_search_progressBar);
 
 
 
 
-        cancel_request_dialog=new Dialog(getActivity());
+        cancel_request_dialog=new Dialog(UserLinkedList.this);
         cancel_request_dialog.setContentView(R.layout.cancel_request_layout);
 
-        accept_dialog=new Dialog(getActivity());
+        accept_dialog=new Dialog(UserLinkedList.this);
         accept_dialog.setContentView(R.layout.accept_links_layout);
 
 
 
-        unlinked_dialog = new Dialog(getActivity());
+        unlinked_dialog = new Dialog(UserLinkedList.this);
         unlinked_dialog.setContentView(R.layout.unlinked_layout);
 
 
@@ -249,16 +232,49 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
 
 
+        toolbar = findViewById(R.id.linked_list_main_toolbar);
+
+        setSupportActionBar(toolbar);
 
 
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId()==R.id.sort){
+                    Toast.makeText(UserLinkedList.this, "hiii", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
 
 
         getAllLinkedUsers();
 
 
-        return view;
+
     }
 
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.linked_list_menu,menu);
+
+
+        return true;
+    }
 
 
     private void getAllLinkedUsers() {
@@ -276,12 +292,12 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot ds : snapshot.getChildren()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     Links_Model links_model = ds.getValue(Links_Model.class);
-                        arrayList.add(links_model);
+                    arrayList.add(links_model);
                 }
 
-                Links_Adapter links_adapter = new Links_Adapter(arrayList,getActivity(),LinkedListFragment.this);
+                Links_Adapter links_adapter = new Links_Adapter(arrayList, UserLinkedList.this, UserLinkedList.this);
                 recyclerView.setAdapter(links_adapter);
                 search_progressBar.setVisibility(View.GONE);
 
@@ -293,23 +309,58 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
             }
         });
 
+    }
+
+
+
+
+
+
+    private void dialog_Builder(Dialog dialog, String userId, CircleImageView user_img, TextView username_tv) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+
+
+        reference.child("user_details").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("CheckResult")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String username = snapshot.child("username").getValue(String.class);
+
+
+                username_tv.setText(username);
+
+                if(Objects.equals(snapshot.child("verify_user").getValue(String.class), "verify")){
+                    username_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verify_user, 0);
+
+                }
+
+
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.placeholder(R.drawable.teamwork_symbol);
+                Glide.with(UserLinkedList.this)
+                        .setDefaultRequestOptions(requestOptions)
+                        .load(snapshot.child("img_uri").getValue(String.class)).into(user_img);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        dialog.show();
 
 
     }
 
 
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.linked_list_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
 
-    }
 
     @Override
     public void MakeLinksClickListener(int position, MaterialButton make_links2) {
-
-
 
         make_links=make_links2;
         userId = arrayList.get(position).getUserId();
@@ -334,66 +385,36 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
         }
 
 
-    }
-
-    private void dialog_Builder(Dialog dialog, String userId, CircleImageView user_img, TextView username_tv) {
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-
-
-        reference.child("user_details").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("CheckResult")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String username = snapshot.child("username").getValue(String.class);
-
-
-                username_tv.setText(username);
-
-                if(Objects.equals(snapshot.child("verify_user").getValue(String.class), "verify")){
-                    username_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verify_user, 0);
-
-                }
-
-
-                RequestOptions requestOptions = new RequestOptions();
-                requestOptions.placeholder(R.drawable.teamwork_symbol);
-                Glide.with(Objects.requireNonNull(getActivity()))
-                        .setDefaultRequestOptions(requestOptions)
-                        .load(snapshot.child("img_uri").getValue(String.class)).into(user_img);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        dialog.show();
-
 
     }
 
     @Override
     public void setOnItemClickListener(int position) {
 
-        UserProfileFragment userProfileFragment = new UserProfileFragment();
-        Bundle args = new Bundle();
-        args.putString("userId",arrayList.get(position).getUserId());
-        userProfileFragment.setArguments(args);
+
 
         if(!(arrayList.get(position).getUserId() == null)){
             if(arrayList.get(position).getUserId().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())){
-                assert getFragmentManager() != null;
-                getFragmentManager().beginTransaction().add(R.id.fragment_layout, new ProfileFragment()).commit();
+                Intent intent = new Intent(UserLinkedList.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
             }else{
-                assert getFragmentManager() != null;
-                getFragmentManager().beginTransaction().add(R.id.fragment_layout, userProfileFragment).addToBackStack(null).commit();
+                Intent intent = new Intent(UserLinkedList.this,UserProfile.class);
+                intent.putExtra("userId",arrayList.get(position).getUserId());
+                startActivity(intent);
+                finish();
             }
         }
 
 
+
+
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
@@ -402,7 +423,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
     private void sendLinks() {
 
-        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.link_sent,null));
+        make_links.setBackgroundColor(getResources().getColor(R.color.link_sent,null));
         make_links.setEnabled(true);
         make_links.setText("Links Sent");
         linksRequest.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
@@ -435,7 +456,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
     private void cancel_Request() {
 
 
-        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
+        make_links.setBackgroundColor(getResources().getColor(R.color.make_links));
         make_links.setEnabled(true);
         make_links.setText("Make Links");
 
@@ -469,7 +490,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
     private void acceptLinks() {
 
-        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.Linked,null));
+        make_links.setBackgroundColor(getResources().getColor(R.color.Linked,null));
         make_links.setEnabled(true);
         make_links.setText("Linked");
 
@@ -532,7 +553,7 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
 
 
         make_links.setText("Make Links");
-        make_links.setBackgroundColor(Objects.requireNonNull(getContext()).getResources().getColor(R.color.make_links,null));
+        make_links.setBackgroundColor(getResources().getColor(R.color.make_links,null));
         make_links.setEnabled(true);
 
         link_ref.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).child("Total_Links")
@@ -567,6 +588,9 @@ public class LinkedListFragment extends Fragment implements RecyclerViewClickLis
         });
 
     }
+
+
+
 
 
 

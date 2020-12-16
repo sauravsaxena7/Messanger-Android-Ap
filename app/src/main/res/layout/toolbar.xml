@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#063250"
+    android:layout_alignParentTop="true"
+    android:fitsSystemWindows="true"
+    android:id="@+id/main_toolbar"
+    app:menu="@menu/profile_main_menu"
+
+    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/user_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:drawablePadding="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="#fff"
+            android:fontFamily="@font/opensansregular"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginLeft="5dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/current_user_image_id"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/edit_user_icon"
+            tools:ignore="VectorDrawableCompat"
+            android:layout_marginEnd="15dp" />
+
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>

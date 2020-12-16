@@ -2,6 +2,7 @@ package com.jlcsoftware.bloodbankcommunity.MainFragment;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.Search_User_Adapters;
 import com.jlcsoftware.bloodbankcommunity.Interface.RecyclerViewClickListener;
 import com.jlcsoftware.bloodbankcommunity.Models.Model_user_details;
+import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserProfile;
 import com.jlcsoftware.bloodbankcommunity.R;
 
 import java.util.ArrayList;
@@ -268,12 +270,15 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     @Override
     public void setOnItemClickListener(int position) {
 
-        UserProfileFragment userProfileFragment = new UserProfileFragment();
-        Bundle args = new Bundle();
-        args.putString("userId",arrayList.get(position).getUserId());
-        userProfileFragment.setArguments(args);
 
-        getFragmentManager().beginTransaction().add(R.id.fragment_layout, userProfileFragment).addToBackStack(null).commit();
+        Intent intent = new Intent(getActivity(),UserProfile.class);
+        intent.putExtra("userId",arrayList.get(position).getUserId());
+
+        getActivity().overridePendingTransition( 0, 0);
+        startActivity(intent);
+        getActivity().overridePendingTransition( 0, 0);
+
+
 
     }
 
