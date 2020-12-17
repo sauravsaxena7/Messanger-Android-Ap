@@ -472,12 +472,13 @@ public class EditProfileFragment extends Fragment {
                             .child(firebaseAuth.getCurrentUser().getUid())
                             .updateChildren(updateValues)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @SuppressLint("CheckResult")
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
                                     RequestOptions requestOptions = new RequestOptions();
                                     requestOptions.placeholder(R.drawable.teamwork_symbol);
-                                    Glide.with(getActivity())
+                                    Glide.with(getActivity().getApplicationContext())
                                             .setDefaultRequestOptions(requestOptions)
                                             .load(img_uri_str).into(uploaded_image);
                                     img_progress_bar.setVisibility(View.INVISIBLE);

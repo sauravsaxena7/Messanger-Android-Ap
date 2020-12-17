@@ -6,155 +6,145 @@
     android:layout_height="match_parent"
     android:background="#2b2b2b"
     android:orientation="vertical"
-    tools:context=".ChatActivity">
+    tools:context=".ChatApplication.ChatActivity">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#063250"
-            android:layout_alignParentTop="true"
-            android:fitsSystemWindows="true"
-            android:id="@+id/chat_toolbar"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp"
-            app:menu="@menu/chat_menu"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            >
-
-
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="#063250"
+                android:layout_alignParentTop="true"
+                android:fitsSystemWindows="true"
+                android:id="@+id/chat_view_toolbar"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:menu="@menu/chat_menu"
+                android:theme="@style/MyOverflowButtonStyle"
 
+                >
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/chat_img"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/teamwork_symbol"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/chat_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="username"
-                        android:drawablePadding="5dp"
-                        android:layout_marginStart="5dp"
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/chat_view_img"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginRight="5dp"
                         android:layout_gravity="center_vertical"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/opensansregular"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginLeft="5dp" />
-                    <TextView
-                        android:id="@+id/chat_online"
-                        android:layout_width="wrap_content"
+                        android:src="@drawable/teamwork_symbol"/>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="online"
-                        android:drawablePadding="5dp"
-                        android:layout_marginStart="5dp"
                         android:layout_gravity="center_vertical"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/opensansregular"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="5dp" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/chat_view_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="username"
+                            android:drawablePadding="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/opensansregular"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="5dp" />
+
+                        <TextView
+                            android:id="@+id/chat_online"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="online"
+                            android:layout_marginStart="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/opensansregular"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="5dp" />
+
+                    </LinearLayout>
+
+
+
 
                 </LinearLayout>
 
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/current_user_image_id"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/edit_user_icon"
-                    tools:ignore="VectorDrawableCompat"
-                    android:layout_marginEnd="15dp" />
+            </androidx.appcompat.widget.Toolbar>
 
 
-            </LinearLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-
-        <RelativeLayout
-            android:background="#2b2b2b"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chat_recycler_view"
+            <RelativeLayout
+                android:background="#2b2b2b"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent">
 
-        </RelativeLayout>
-    </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chat_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/chat_bg"
-        android:orientation="horizontal">
+            </RelativeLayout>
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/chat_attachment"
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:padding="5dp"
-            android:src="@drawable/add"
-            />
-
-        <EditText
-            android:id="@+id/messageET"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:textSize="14sp"
-            android:padding="7dp"
-            android:textColor="#fff"
-            android:textColorHint="#fff"
-            android:fontFamily="@font/opensansregular"
-            android:hint="Message..."
-            android:maxLines="2">
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/chat_bg"
+            android:orientation="horizontal">
 
-        </EditText>
+            <ImageView
+                android:id="@+id/chat_attachment"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:src="@drawable/add"
+                />
 
-        <ImageView
-            android:id="@+id/sendBtn"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:padding="5dp"
-            android:src="@drawable/send"
-            />
+            <EditText
+                android:id="@+id/chat_messageET"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textSize="14sp"
+                android:padding="7dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:hint="Message..."
+                android:maxLines="2">
 
-    </LinearLayout>
+            </EditText>
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/chat_sendBtn"
+                android:layout_width="37dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"
+                android:src="@drawable/send"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>

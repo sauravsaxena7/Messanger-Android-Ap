@@ -31,7 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.RecyclerViewAdapter;
-import com.jlcsoftware.bloodbankcommunity.ChatActivity;
+import com.jlcsoftware.bloodbankcommunity.ChatApplication.ChatActivity;
+import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.User_details_item;
 import com.jlcsoftware.bloodbankcommunity.R;
 
@@ -71,7 +72,7 @@ public class UserProfile extends AppCompatActivity {
 
 
     private LinearLayout links_linear_layout;
-    String userId,img_uri,username;
+    String userId,img_uri,username,verify_user;
 
     private Dialog cancel_request_dialog,accept_dialog,unlinked_dialog;
 
@@ -290,6 +291,15 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
+        current_user_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                overridePendingTransition( 0, 0);
+                startActivity(new Intent(UserProfile.this, MainActivity.class));
+                overridePendingTransition( 0, 0);
+            }
+        });
+
 
         fullName_tv = findViewById(R.id.user_profile_fullName);
         username_tv = findViewById(R.id.user_profile_username);
@@ -315,6 +325,8 @@ public class UserProfile extends AppCompatActivity {
 
                Intent intent = new Intent(UserProfile.this,UserLinkedList.class);
                intent.putExtra("userId",userId);
+               intent.putExtra("username",username);
+               intent.putExtra("verify_user",verify_user);
                 overridePendingTransition( 0, 0);
                 startActivity(intent);
                 overridePendingTransition( 0, 0);
@@ -346,6 +358,7 @@ public class UserProfile extends AppCompatActivity {
                 accept_username_tv.setText(username);
                 unlinked_username_tv.setText(username);
 
+                verify_user = snapshot.child("verify_user").getValue(String.class);
 
 
                 if(snapshot.child("verify_user").getValue(String.class).equals("verify")){
@@ -504,16 +517,14 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
                 Intent intent = new Intent(UserProfile.this, ChatActivity.class);
-
                 intent.putExtra("userId",userId);
-                intent.putExtra("img_uri",img_uri);
-                intent.putExtra("username",username);
-
                 startActivity(intent);
-
             }
         });
+
 
 
 

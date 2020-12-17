@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.RecyclerViewAdapter;
+import com.jlcsoftware.bloodbankcommunity.ChatApplication.Chats;
 import com.jlcsoftware.bloodbankcommunity.Models.User_details_item;
 import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserLinkedList;
 import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserProfile;
@@ -78,6 +79,7 @@ public class ProfileFragment extends Fragment {
 
     LinearLayout links_linear_layout;
 
+    String username,verify_user;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -114,6 +116,9 @@ public class ProfileFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), UserLinkedList.class);
                 intent.putExtra("userId",firebaseAuth.getCurrentUser().getUid());
+                intent.putExtra("username",username);
+                intent.putExtra("verify_user",verify_user);
+
                 getActivity().overridePendingTransition( 0, 0);
                 startActivity(intent);
                 getActivity().overridePendingTransition( 0, 0);
@@ -159,6 +164,7 @@ public class ProfileFragment extends Fragment {
 
 
 
+        progressBar = view.findViewById(R.id.profile_details_progressBar);
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -168,13 +174,13 @@ public class ProfileFragment extends Fragment {
         reference.keepSynced(true);
 
         reference.child("user_details").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "CheckResult"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String first_name = snapshot.child("first_name").getValue(String.class);
                 String last_name = snapshot.child("last_name").getValue(String.class);
-                String username = snapshot.child("username").getValue(String.class);
+                username = snapshot.child("username").getValue(String.class);
 
 
 
@@ -183,6 +189,7 @@ public class ProfileFragment extends Fragment {
                 username_tv.setText(username);
                 fullName_tv.setText(first_name+" "+last_name);
 
+                verify_user = snapshot.child("verify_user").getValue(String.class);
 
                 if(snapshot.child("verify_user").getValue(String.class).equals("verify")){
                     username_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verify_user, 0);
@@ -204,7 +211,7 @@ public class ProfileFragment extends Fragment {
                 if(!img_uri.equals("")){
                     RequestOptions requestOptions = new RequestOptions();
                     requestOptions.placeholder(R.drawable.teamwork_symbol);
-                    Glide.with(getActivity())
+                    Glide.with(getContext().getApplicationContext())
                             .setDefaultRequestOptions(requestOptions)
                             .load(img_uri).into(profile_img);
 
@@ -299,7 +306,7 @@ public class ProfileFragment extends Fragment {
                         break;
 
                     case R.id.chat:
-                        Toast.makeText(getActivity(), "chat messanging", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), Chats.class));
                         break;
 
                     case R.id.logout:

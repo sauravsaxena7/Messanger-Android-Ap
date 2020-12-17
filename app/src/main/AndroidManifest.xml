@@ -10,11 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotCurrentUser.UserLinkedList"></activity>
+        <activity android:name=".ChatApplication.ChatActivity"
+            ></activity>
+        <activity android:name=".ChatApplication.Chats" />
+        <activity android:name=".NotCurrentUser.UserLinkedList" />
         <activity android:name=".NotCurrentUser.UserProfile" />
-        <activity
-            android:name=".ChatActivity"
-            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".UserHandle.SplashBloodBank">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,9 +32,9 @@
     </application>
 
     <uses-feature android:name="android.hardware.type.watch" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

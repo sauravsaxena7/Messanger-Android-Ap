@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseReference reference;
 
+    FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -42,24 +44,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setItemIconTintList(null);
 
 
-        reference = FirebaseDatabase.getInstance().getReference("users");
+        firebaseAuth = FirebaseAuth.getInstance();
+        reference= FirebaseDatabase.getInstance()
+                .getReference("users").child("user_details")
+                .child(firebaseAuth.getCurrentUser().getUid());
 
 
-        reference.child("user_details").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if(snapshot.child("online")!=null){
-                    reference.child("user_details").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("online").onDisconnect().setValue(false);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_layout, new ProfileFragment()).commit();
@@ -105,30 +95,32 @@ public class MainActivity extends AppCompatActivity {
             };
 
 
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        Map<String ,Object> updateValues = new HashMap<>();
-        updateValues.put("online",true);
-        reference.child("user_details").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(updateValues);
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser!=null){
+            reference.child("online").setValue(true);
+        }
 
     }
 
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            Map<String ,Object> updateValues = new HashMap<>();
-            updateValues.put("online",false);
-            updateValues.put("lastSeen", ServerValue.TIMESTAMP);
-            reference.child("user_details").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(updateValues);
-
-        }
-    }
-
+    protected void onDestroy() {
+        super.onDestroy();
+        reference.child("online").setValue(false);
+        reference.child("lastSeen").setValue(ServerValue.TIMESTAMP);
 
 
     }
+
+
+
+
+}

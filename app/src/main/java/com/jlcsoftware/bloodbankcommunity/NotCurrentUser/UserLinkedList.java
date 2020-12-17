@@ -1,4 +1,4 @@
-package com.jlcsoftware.bloodbankcommunity.NotCurrentUser;
+   package com.jlcsoftware.bloodbankcommunity.NotCurrentUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,15 +49,17 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
     private ProgressBar search_progressBar;
 
 
-    String userId,userId2;
+    String userId,userId2,username,verify_user;
 
     TextView no_user_found;
 
-    private TextView links_count, cancel_request_username_tv,accept_username_tv,unlinked_username_tv;
+    private TextView links_count,links_tv, cancel_request_username_tv,accept_username_tv,unlinked_username_tv;
 
     private DatabaseReference linksRequest,link_ref;
 
     private FirebaseAuth firebaseAuth;
+
+
 
     private CircleImageView cancel_request_user_img , accept_user_img,unlinked_user_img;
 
@@ -66,6 +70,9 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
 
     private Toolbar toolbar;
 
+    DatabaseReference reference;
+
+    LinearLayout search_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,19 +88,39 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+
+        reference= FirebaseDatabase.getInstance()
+                .getReference("users").child("user_details")
+                .child(firebaseAuth.getCurrentUser().getUid());
+
         link_ref = FirebaseDatabase.getInstance().getReference("AllLinks");
         linksRequest = FirebaseDatabase.getInstance()
                 .getReference("All_Links_Request").child("links_request");
 
-        links_count = findViewById(R.id.link_list_count_tv);
+        links_count = findViewById(R.id.link_list_username_tv);
+        links_tv = findViewById(R.id.link_list_tv);
 
         userId2 = getIntent().getStringExtra("userId");
+
+
+        username = getIntent().getStringExtra("username");
+        verify_user = getIntent().getStringExtra("verify_user");
+
+        links_count.setText(username);
+
+        if(verify_user.equals("verify")){
+            links_count.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verify_user, 0);
+        }
+
+
+
+
 
 
         link_ref.child(userId2).child("Total_Links").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                links_count.setText(String.valueOf(snapshot.getChildrenCount()));
+                links_tv.setText(String.valueOf(snapshot.getChildrenCount())+" "+" "+"Links");
             }
 
             @Override
@@ -106,6 +133,7 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
         search_progressBar = findViewById(R.id.user_search_progressBar);
 
 
+        search_layout = findViewById(R.id.search_links_layout);
 
 
         cancel_request_dialog=new Dialog(UserLinkedList.this);
@@ -259,6 +287,24 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
     }
 
 
+
+
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser!=null){
+            reference.child("online").setValue(true);
+        }
+
+    }
+
+
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -271,9 +317,9 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
 
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.linked_list_menu,menu);
-
-
         return true;
+
+
     }
 
 
@@ -300,6 +346,9 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
                 Links_Adapter links_adapter = new Links_Adapter(arrayList, UserLinkedList.this, UserLinkedList.this);
                 recyclerView.setAdapter(links_adapter);
                 search_progressBar.setVisibility(View.GONE);
+
+                search_layout.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
 
             }
 
@@ -396,14 +445,17 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
         if(!(arrayList.get(position).getUserId() == null)){
             if(arrayList.get(position).getUserId().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())){
                 Intent intent = new Intent(UserLinkedList.this, MainActivity.class);
+                overridePendingTransition( 0, 0);
                 startActivity(intent);
+                overridePendingTransition( 0, 0);
                 finish();
 
             }else{
                 Intent intent = new Intent(UserLinkedList.this,UserProfile.class);
                 intent.putExtra("userId",arrayList.get(position).getUserId());
+                overridePendingTransition( 0, 0);
                 startActivity(intent);
-                finish();
+                overridePendingTransition( 0, 0);
             }
         }
 
