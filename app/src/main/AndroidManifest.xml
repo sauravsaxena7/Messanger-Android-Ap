@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ChatApplication.ChatActivity"
-            ></activity>
+            android:windowSoftInputMode="adjustResize"></activity>
+
         <activity android:name=".ChatApplication.Chats" />
         <activity android:name=".NotCurrentUser.UserLinkedList" />
         <activity android:name=".NotCurrentUser.UserProfile" />

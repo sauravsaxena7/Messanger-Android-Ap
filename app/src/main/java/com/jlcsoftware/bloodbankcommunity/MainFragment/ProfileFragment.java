@@ -195,6 +195,9 @@ public class ProfileFragment extends Fragment {
                     username_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verify_user, 0);
                 }
 
+
+
+
                 String email = firebaseAuth.getCurrentUser().getEmail();
                 String blood_group = snapshot.child("blood_group").getValue(String.class);
                 String country_name = snapshot.child("country_name").getValue(String.class);

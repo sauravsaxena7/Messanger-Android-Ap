@@ -4,19 +4,19 @@
     android:shape="rectangle" >
 
     <stroke android:width="1dp"
-        android:color="#1BC1E2"/>
+        android:color="#66000000"/>
 
-    <corners android:bottomLeftRadius="100dp"
+    <corners android:bottomLeftRadius="10dp"
         android:topLeftRadius="100dp"
-        android:bottomRightRadius="10dp"
+        android:bottomRightRadius="100dp"
         android:topRightRadius="100dp" />
 
     <!-- <gradient android:startColor="@android:color/transparent"
          android:endColor="@android:color/transparent"
          android:angle="90"/>-->
 
-    <gradient android:startColor="#1BC1E2"
-        android:endColor="#1BC1E2"
+    <gradient android:startColor="#66000000"
+        android:endColor="#66000000"
         android:angle="90"/>
 
 </shape>

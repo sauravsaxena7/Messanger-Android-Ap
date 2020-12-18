@@ -25,12 +25,11 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-
             android:id="@+id/accept_user_image"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:textColor="#fff"
-            android:src="@drawable/teamwork_symbol"
+            android:src="@drawable/ic_launcher_background"
             android:gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

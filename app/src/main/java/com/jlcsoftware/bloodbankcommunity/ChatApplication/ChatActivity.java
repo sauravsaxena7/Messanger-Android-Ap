@@ -4,9 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,22 +25,38 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.jlcsoftware.bloodbankcommunity.Adapter.MessagesAdapter;
 import com.jlcsoftware.bloodbankcommunity.GetTimeAgo;
+import com.jlcsoftware.bloodbankcommunity.Models.MessagesModels;
 import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserProfile;
 import com.jlcsoftware.bloodbankcommunity.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
+    String img_uri_str;
 
     private Toolbar toolbar;
     DatabaseReference reference;
@@ -50,6 +71,28 @@ public class ChatActivity extends AppCompatActivity {
 
     private ImageView chat_attachment,chat_send_btn;
     private EditText chat_et;
+
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private final List<MessagesModels> messageList = new ArrayList<>();
+
+    private LinearLayoutManager linearLayoutManager;
+
+    private MessagesAdapter messagesAdapter;
+
+    private static int TOTAL_ITEM_TO_LOAD=10;
+
+    private int mCurrentPage = 1;
+
+    DatabaseReference ref2;
+
+    //solution for pagination
+
+    private int itemPos = 0;
+    private String last_key ="";
+    private String prev_key = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +113,8 @@ public class ChatActivity extends AppCompatActivity {
         chat_send_btn = findViewById(R.id.chat_sendBtn);
 
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -81,6 +126,10 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
+
+        ref2= FirebaseDatabase.getInstance()
+                .getReference("users").child("user_details")
+                .child(firebaseAuth.getCurrentUser().getUid());
 
 
 
@@ -113,11 +162,7 @@ public class ChatActivity extends AppCompatActivity {
                     last_seen.setText("online");
                 }else{
 
-
-
                     String last_seen_str = GetTimeAgo.getTimeAgo(snapshot.child("lastSeen").getValue(Long.class),ChatActivity.this);
-
-
                     last_seen.setText(last_seen_str);
 
                 }
@@ -136,7 +181,6 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
 
         ref = FirebaseDatabase.getInstance().getReference();
 
@@ -180,6 +224,25 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
+
+
+
+        recyclerView = findViewById(R.id.chat_recycler_view);
+
+        swipeRefreshLayout = findViewById(R.id.message_swipe_up);
+
+        linearLayoutManager = new LinearLayoutManager(this);
+
+        messagesAdapter = new MessagesAdapter(messageList,ChatActivity.this);
+
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(messagesAdapter);
+
+
+
         chat_send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,16 +257,153 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                itemPos=0;
+                loadMoreMessages();
+            }
+        });
 
 
+        chat_attachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent,1024);
+
+
+            }
+        });
+
+        loadMessages();
 
 
 
     }
 
+
+    private void loadMoreMessages() {
+        DatabaseReference messageRef = ref.child("messages")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .child(userId);
+
+        Query messageQuery = messageRef.orderByKey().endAt(last_key).limitToLast(10);
+
+        messageQuery.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                MessagesModels messagesModels = snapshot.getValue(MessagesModels.class);
+
+                String messageKey = snapshot.getKey();
+
+
+
+                if(!prev_key.equals(messageKey)){
+
+                    messageList.add(itemPos++,messagesModels);
+                }else{
+
+                    prev_key =last_key;
+                }
+
+
+                if(itemPos==1){
+                    last_key = messageKey;
+                }
+
+
+
+                messagesAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+
+                linearLayoutManager.scrollToPositionWithOffset(10,0);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+
+    private void loadMessages() {
+
+        DatabaseReference messageRef = ref.child("messages").child(firebaseAuth.getCurrentUser()
+                .getUid()).child(userId);
+
+        Query messageQuery = messageRef
+                .limitToLast(mCurrentPage*TOTAL_ITEM_TO_LOAD);
+
+        messageQuery.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+
+                MessagesModels messagesModels = snapshot.getValue(MessagesModels.class);
+
+                itemPos++;
+
+                if(itemPos==1){
+                    String messageKey = snapshot.getKey();
+                    last_key = messageKey;
+                    prev_key = messageKey;
+                }
+
+                messageList.add(messagesModels);
+                messagesAdapter.notifyDataSetChanged();
+                recyclerView.scrollToPosition(messageList.size()-1);
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
     private void sendMessages(String messages) {
 
-        Toast.makeText(this, "lllll", Toast.LENGTH_SHORT).show();
 
 
         String current_user_ref = "messages/"+firebaseAuth.getCurrentUser().getUid()+"/"+userId;
@@ -219,10 +419,14 @@ public class ChatActivity extends AppCompatActivity {
 
         Map messageMap = new HashMap();
 
+
+
         messageMap.put("message",messages);
         messageMap.put("type","text");
         messageMap.put("seen",false);
         messageMap.put("time",ServerValue.TIMESTAMP);
+        messageMap.put("from",firebaseAuth.getCurrentUser().getUid());
+
 
 
 
@@ -230,7 +434,7 @@ public class ChatActivity extends AppCompatActivity {
 
         messageUserMap.put(current_user_ref+"/"+push_id,messageMap);
 
-        messageMap.put(chat_user_ref+"/"+push_id,messageMap);
+        messageUserMap.put(chat_user_ref+"/"+push_id,messageMap);
 
 
 
@@ -244,6 +448,8 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        chat_et.setText("");
 
     }
 
@@ -264,4 +470,112 @@ public class ChatActivity extends AppCompatActivity {
         return true;
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser!=null){
+            ref2.child("online").setValue(true);
+        }
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1024 && resultCode == RESULT_OK){
+            Uri imgUri = data.getData();
+
+            String current_user_ref = "messages/"+firebaseAuth.getCurrentUser().getUid()+"/"+userId;
+            String chat_user_ref = "messages/"+userId+"/"+firebaseAuth.getCurrentUser().getUid();
+
+
+            DatabaseReference user_message_push =ref.child("messages").child(firebaseAuth.getCurrentUser().getUid())
+                    .child(userId).push();
+
+
+            String push_id = user_message_push.getKey();
+
+            StorageReference filepath = FirebaseStorage.getInstance()
+                    .getReference().child("messages_image").child(push_id+".jpg");
+
+
+            Map messageMap = new HashMap();
+
+
+
+            messageMap.put("message",img_uri_str);
+            messageMap.put("type","image");
+            messageMap.put("seen",false);
+            messageMap.put("time",ServerValue.TIMESTAMP);
+            messageMap.put("from",firebaseAuth.getCurrentUser().getUid());
+
+
+            Map messageUserMap = new HashMap();
+
+            messageUserMap.put(current_user_ref+"/"+push_id,messageMap);
+
+            messageUserMap.put(chat_user_ref+"/"+push_id,messageMap);
+
+
+
+            ref.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                    if(error!=null){
+                        Log.d("chat",error.getMessage());
+                    }
+
+                }
+            });
+
+
+            StorageTask uploadTask = filepath.putFile(imgUri);
+
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+
+                    if(!task.isSuccessful())
+                    {
+                        throw task.getException();
+                    }
+                    return filepath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+
+                    if(task.isSuccessful())
+                    {
+                        Uri downloadUri = task.getResult();
+                        img_uri_str=downloadUri.toString();
+                        messageMap.put("message",img_uri_str);
+
+                        ref.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                                if(error!=null){
+                                    Log.d("chat",error.getMessage());
+                                }
+
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+
+
+
+        }
+    }
 }

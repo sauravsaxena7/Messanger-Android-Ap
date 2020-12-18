@@ -434,7 +434,9 @@ public class EditProfileFragment extends Fragment {
     @SuppressWarnings("rawtypes")
     private void UploadImageToFirebaseStorage(Uri img_uri) {
         //upload image to firebase
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile Image of user");
+        StorageReference storageReference = FirebaseStorage
+                .getInstance().getReference()
+                .child("Profile Image of user");
         final StorageReference fileReference = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "profile.jpg");
 
 

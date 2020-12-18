@@ -9,11 +9,6 @@
     tools:context=".ChatApplication.ChatActivity">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -88,21 +83,27 @@
 
             </androidx.appcompat.widget.Toolbar>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/message_swipe_up"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/shell"
+        android:layout_below="@+id/chat_view_toolbar"
+        android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:background="#2b2b2b"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/chat_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
 
-            </RelativeLayout>
-        </LinearLayout>
+            />
 
-        <LinearLayout
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/shell"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
