@@ -3,7 +3,7 @@ package com.jlcsoftware.bloodbankcommunity.Models;
 public class MessagesModels {
 
 
-    public String message,type,from;
+    public String message,type,from,push_id;
 
     public long time;
 
@@ -15,10 +15,11 @@ public class MessagesModels {
     public MessagesModels() {
     }
 
-    public MessagesModels(String message, String type, String from, long time, boolean seem) {
+    public MessagesModels(String message, String type, String from, String push_id, long time, boolean seem) {
         this.message = message;
         this.type = type;
         this.from = from;
+        this.push_id = push_id;
         this.time = time;
         this.seem = seem;
     }
@@ -45,6 +46,14 @@ public class MessagesModels {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getPush_id() {
+        return push_id;
+    }
+
+    public void setPush_id(String push_id) {
+        this.push_id = push_id;
     }
 
     public long getTime() {

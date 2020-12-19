@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jlcsoftware.bloodbankcommunity.Interface.MessageClickListener;
 import com.jlcsoftware.bloodbankcommunity.Models.MessagesModels;
 import com.jlcsoftware.bloodbankcommunity.R;
 
@@ -35,12 +36,16 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     private List<MessagesModels> messageList;
     Context context;
+
+    MessageClickListener messageClickListener;
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    public MessagesAdapter(List<MessagesModels> messageList, Context context) {
+
+    public MessagesAdapter(List<MessagesModels> messageList, Context context, MessageClickListener messageClickListener) {
         this.messageList = messageList;
         this.context = context;
+        this.messageClickListener = messageClickListener;
     }
 
     // Determines the appropriate ViewType according to the sender of the message.
@@ -75,6 +80,8 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
         return null;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -114,6 +121,14 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
             message_img_layout = itemView.findViewById(R.id.messageLayout_img);
             imageView = itemView.findViewById(R.id.sender_message_img);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    messageClickListener.setOnItemLongClickListener(getAdapterPosition());
+                    return true;
+                }
+            });
 
 
         }
@@ -163,6 +178,14 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             message_img_layout = itemView.findViewById(R.id.message_img);
 
             imageView = itemView.findViewById(R.id.receiver_message_img);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    messageClickListener.setOnItemLongClickListener(getAdapterPosition());
+                    return true;
+                }
+            });
         }
 
 

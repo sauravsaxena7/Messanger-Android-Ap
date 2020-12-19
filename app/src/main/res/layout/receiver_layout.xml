@@ -49,6 +49,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:maxWidth="270dp"
                     android:fontFamily="@font/opensansregular"
                     android:text="Hello Amit Anand, How are you?"
                     android:textColor="#fff" />

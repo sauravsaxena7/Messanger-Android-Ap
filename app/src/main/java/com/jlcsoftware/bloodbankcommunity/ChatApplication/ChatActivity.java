@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,8 +28,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -45,6 +48,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.jlcsoftware.bloodbankcommunity.Adapter.MessagesAdapter;
 import com.jlcsoftware.bloodbankcommunity.GetTimeAgo;
+import com.jlcsoftware.bloodbankcommunity.Interface.MessageClickListener;
 import com.jlcsoftware.bloodbankcommunity.Models.MessagesModels;
 import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserProfile;
 import com.jlcsoftware.bloodbankcommunity.R;
@@ -54,7 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements MessageClickListener {
 
     String img_uri_str;
 
@@ -73,7 +77,6 @@ public class ChatActivity extends AppCompatActivity {
     private EditText chat_et;
 
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     private final List<MessagesModels> messageList = new ArrayList<>();
 
@@ -87,11 +90,16 @@ public class ChatActivity extends AppCompatActivity {
 
     DatabaseReference ref2;
 
+    private Dialog delete_message_dialog;
+
+    private MaterialButton delete_btn,never_btn;
+
     //solution for pagination
 
-    private int itemPos = 0;
-    private String last_key ="";
-    private String prev_key = "";
+
+    private String message_key;
+    int messagePosition;
+
 
 
     @Override
@@ -113,14 +121,42 @@ public class ChatActivity extends AppCompatActivity {
         chat_send_btn = findViewById(R.id.chat_sendBtn);
 
 
+
+        delete_message_dialog=new Dialog(ChatActivity.this);
+        delete_message_dialog.setContentView(R.layout.delete_message_dialog);
+
+        delete_btn = delete_message_dialog.findViewById(R.id.delete_btn);
+        never_btn = delete_message_dialog.findViewById(R.id.never_btn);
+
+
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete_message_dialog.dismiss();
+                delete_message();
+            }
+        });
+
+        never_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete_message_dialog.dismiss();
+            }
+        });
+
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId()==R.id.refresh){
-                    Toast.makeText(ChatActivity.this, "hiii", Toast.LENGTH_SHORT).show();
+                    finish();
+                    overridePendingTransition( 0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition( 0, 0);
                 }
+
                 return true;
             }
         });
@@ -229,11 +265,10 @@ public class ChatActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.chat_recycler_view);
 
-        swipeRefreshLayout = findViewById(R.id.message_swipe_up);
 
         linearLayoutManager = new LinearLayoutManager(this);
 
-        messagesAdapter = new MessagesAdapter(messageList,ChatActivity.this);
+        messagesAdapter = new MessagesAdapter(messageList,ChatActivity.this,ChatActivity.this);
 
         recyclerView.setHasFixedSize(true);
 
@@ -257,14 +292,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
 
-                itemPos=0;
-                loadMoreMessages();
-            }
-        });
 
 
         chat_attachment.setOnClickListener(new View.OnClickListener() {
@@ -284,77 +312,13 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    private void loadMoreMessages() {
-        DatabaseReference messageRef = ref.child("messages")
-                .child(firebaseAuth.getCurrentUser().getUid())
-                .child(userId);
-
-        Query messageQuery = messageRef.orderByKey().endAt(last_key).limitToLast(10);
-
-        messageQuery.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                MessagesModels messagesModels = snapshot.getValue(MessagesModels.class);
-
-                String messageKey = snapshot.getKey();
-
-
-
-                if(!prev_key.equals(messageKey)){
-
-                    messageList.add(itemPos++,messagesModels);
-                }else{
-
-                    prev_key =last_key;
-                }
-
-
-                if(itemPos==1){
-                    last_key = messageKey;
-                }
-
-
-
-                messagesAdapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
-
-                linearLayoutManager.scrollToPositionWithOffset(10,0);
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
-
 
     private void loadMessages() {
 
         DatabaseReference messageRef = ref.child("messages").child(firebaseAuth.getCurrentUser()
                 .getUid()).child(userId);
 
-        Query messageQuery = messageRef
-                .limitToLast(mCurrentPage*TOTAL_ITEM_TO_LOAD);
+        Query messageQuery = messageRef;
 
         messageQuery.addChildEventListener(new ChildEventListener() {
 
@@ -364,18 +328,9 @@ public class ChatActivity extends AppCompatActivity {
 
                 MessagesModels messagesModels = snapshot.getValue(MessagesModels.class);
 
-                itemPos++;
-
-                if(itemPos==1){
-                    String messageKey = snapshot.getKey();
-                    last_key = messageKey;
-                    prev_key = messageKey;
-                }
-
                 messageList.add(messagesModels);
                 messagesAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(messageList.size()-1);
-                swipeRefreshLayout.setRefreshing(false);
 
             }
 
@@ -425,6 +380,7 @@ public class ChatActivity extends AppCompatActivity {
         messageMap.put("type","text");
         messageMap.put("seen",false);
         messageMap.put("time",ServerValue.TIMESTAMP);
+        messageMap.put("push_id",push_id);
         messageMap.put("from",firebaseAuth.getCurrentUser().getUid());
 
 
@@ -512,6 +468,7 @@ public class ChatActivity extends AppCompatActivity {
             messageMap.put("type","image");
             messageMap.put("seen",false);
             messageMap.put("time",ServerValue.TIMESTAMP);
+            messageMap.put("push_id",push_id);
             messageMap.put("from",firebaseAuth.getCurrentUser().getUid());
 
 
@@ -578,4 +535,85 @@ public class ChatActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void setOnItemLongClickListener(int position) {
+
+        delete_message_dialog.show();
+        message_key = messageList.get(position).getPush_id();
+        messagePosition = position;
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    private void delete_message() {
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("messages");
+
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child(userId).child(message_key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(snapshot.exists()){
+
+
+                    if(snapshot.child("type").getValue().toString().equals("text")){
+                        delete_text_message();
+                    }else if(snapshot.child("type").getValue().toString().equals("image")){
+                        delete_image_message();
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void delete_image_message() {
+
+        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(messageList.get(messagePosition).getMessage());
+        photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+               delete_text_message();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+
+            }
+        });
+
+    }
+
+    private void delete_text_message() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("messages");
+
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child(userId).child(message_key)
+                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                messageList.remove(messagePosition);
+                messagesAdapter.notifyItemRemoved(messagePosition);
+            }
+        });
+
+    }
+
 }

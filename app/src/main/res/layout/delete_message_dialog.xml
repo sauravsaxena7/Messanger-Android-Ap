@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#0f4c75"
+        android:padding="10dp"
+        android:gravity="center_horizontal">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete Message"
+                android:padding="7dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/opensansregular"
+                android:textSize="22sp"
+                android:drawablePadding="15dp"
+                tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/cancel_icon"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            >
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_btn"
+                android:padding="11dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:backgroundTint="#B12D03"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                tools:targetApi="lollipop"
+                tools:ignore="HardcodedText" />
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/never_btn"
+                android:padding="11dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:backgroundTint="#059A0B"
+                android:layout_height="wrap_content"
+                android:text="Never"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                tools:targetApi="lollipop"
+                tools:ignore="HardcodedText" />
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

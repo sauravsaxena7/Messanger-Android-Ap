@@ -83,22 +83,16 @@
 
             </androidx.appcompat.widget.Toolbar>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/message_swipe_up"
-        android:layout_width="match_parent"
-        android:layout_above="@+id/shell"
-        android:layout_below="@+id/chat_view_toolbar"
-        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/shell"
+            android:layout_below="@+id/chat_view_toolbar"
 
 
             />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 
