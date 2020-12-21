@@ -180,35 +180,9 @@
 
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+            <include layout="@layout/logo"
+                android:id="@+id/test1" />
 
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/blood_bank_logo"
-                    android:layout_gravity="center"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_gravity="center"
-                    android:text="Blood Bank"
-                    android:textSize="27sp"
-                    android:textStyle="bold"
-                    android:textColor="#CDDC39"
-                    android:fontFamily="serif-monospace"
-                    />
-
-
-            </LinearLayout>
 
 
         </LinearLayout>
