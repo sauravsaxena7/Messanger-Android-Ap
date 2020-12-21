@@ -36,6 +36,8 @@ import com.jlcsoftware.bloodbankcommunity.Interface.RecyclerViewClickListener;
 import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.Links_Model;
 import com.jlcsoftware.bloodbankcommunity.R;
+import com.jlcsoftware.bloodbankcommunity.UserHandle.Login;
+import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.InternetCheck;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -53,7 +55,7 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
 
     TextView no_user_found;
 
-    private TextView links_count,links_tv, cancel_request_username_tv,accept_username_tv,unlinked_username_tv;
+    private TextView links_count,links_tv, cancel_request_username_tv,accept_username_tv,unlinked_username_tv,error_content_tv;
 
     private DatabaseReference linksRequest,link_ref;
 
@@ -65,7 +67,7 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
 
     private Dialog cancel_request_dialog,accept_dialog,unlinked_dialog;
 
-    private MaterialButton make_links,cancel_request_btn,never_btn,accept_links_btn ,delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn;
+    private MaterialButton make_links,cancel_request_btn,never_btn,accept_links_btn ,delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn,error_btn;
 
 
     private Toolbar toolbar;
@@ -73,6 +75,8 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
     DatabaseReference reference;
 
     LinearLayout search_layout;
+
+    private Dialog error_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,18 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
         recyclerView = findViewById(R.id.users_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(UserLinkedList.this));
         recyclerView.setHasFixedSize(true);
+
+        error_dialog=new Dialog(UserLinkedList.this);
+        error_dialog.setContentView(R.layout.error_dialog);
+        error_content_tv=error_dialog.findViewById(R.id.error_content_tv);
+        error_btn=error_dialog.findViewById(R.id.error_button_id);
+
+        error_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                error_dialog.dismiss();
+            }
+        });
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -414,24 +430,34 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
         make_links=make_links2;
         userId = arrayList.get(position).getUserId();
 
-        if(make_links.getText().toString().trim().equals("Make Links")){
+        new InternetCheck(internet -> {
+            if(internet.booleanValue()){
+                if(make_links.getText().toString().trim().equals("Make Links")){
 
-            sendLinks();
-
-
-        }else if(make_links.getText().toString().trim().equals("Links Sent")){
-
-            dialog_Builder(cancel_request_dialog,userId,cancel_request_user_img,cancel_request_username_tv);
+                    sendLinks();
 
 
-        }else if(make_links.getText().toString().trim().equals("Invitations")){
+                }else if(make_links.getText().toString().trim().equals("Links Sent")){
 
-            dialog_Builder(accept_dialog,userId,accept_user_img,accept_username_tv);
+                    dialog_Builder(cancel_request_dialog,userId,cancel_request_user_img,cancel_request_username_tv);
 
 
-        }else{
-            dialog_Builder(unlinked_dialog,userId,unlinked_user_img,unlinked_username_tv);
-        }
+                }else if(make_links.getText().toString().trim().equals("Invitations")){
+
+                    dialog_Builder(accept_dialog,userId,accept_user_img,accept_username_tv);
+
+
+                }else{
+                    dialog_Builder(unlinked_dialog,userId,unlinked_user_img,unlinked_username_tv);
+                }
+
+            }else {
+                error_content_tv.setText("No Internet Connection");
+                error_dialog.show();
+            }
+
+        });
+
 
 
 
