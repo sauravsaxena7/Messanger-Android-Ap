@@ -308,7 +308,6 @@ public class ChatActivity extends AppCompatActivity implements MessageClickListe
         });
 
 
-        //hi
 
 
         chat_attachment.setOnClickListener(new View.OnClickListener() {
