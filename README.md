@@ -24,7 +24,7 @@
 
 LinkWink Splash Screen             
 :-------------------------:|
- <img src="images/splash_screen.jpg" alt="drawing" width="250"/>  
+ <img src="images/splash_screen_link_wink.jpg" alt="drawing" width="250"/>  
 
 
 //hi
@@ -55,7 +55,7 @@ Move to Finished Task             |  Task is finished now
  <img src="images/move1.jpg" alt="drawing" width="250"/>  | <img src="images/move2.jpg" alt="drawing" width="250"/>
 
 
-//hi
+
 
 ### This is how you can use our software
 
