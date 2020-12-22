@@ -3,6 +3,7 @@ package com.jlcsoftware.bloodbankcommunity.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.util.Calendar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,10 @@ import com.jlcsoftware.bloodbankcommunity.Interface.MessageClickListener;
 import com.jlcsoftware.bloodbankcommunity.Models.MessagesModels;
 import com.jlcsoftware.bloodbankcommunity.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -155,7 +159,9 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
             }
 
-            time.setText(String.valueOf(messageModel.getTime()));
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+            String dateString = formatter.format(new Date(messageModel.getTime()));
+            time.setText(dateString);
 
         }
 
@@ -209,7 +215,9 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             }
 
 
-            time.setText(String.valueOf(messageModel.getTime()));
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+            String dateString = formatter.format(new Date(messageModel.getTime()));
+            time.setText(dateString);
 
             DatabaseReference reference  = FirebaseDatabase.getInstance().getReference("users");
 
@@ -242,7 +250,19 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
     }
 
-
+    public  String getDateCurrentTimeZone(long timestamp) {
+        try{
+            Calendar calendar = Calendar.getInstance();
+            TimeZone tz = TimeZone.getDefault();
+            calendar.setTimeInMillis(timestamp * 1000);
+            calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date currenTimeZone = (Date) calendar.getTime();
+            return sdf.format(currenTimeZone);
+        }catch (Exception e) {
+        }
+        return "";
+    }
 
 
 }

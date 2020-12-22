@@ -35,6 +35,7 @@ import com.jlcsoftware.bloodbankcommunity.ChatApplication.ChatActivity;
 import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.User_details_item;
 import com.jlcsoftware.bloodbankcommunity.R;
+import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.InternetCheck;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import java.util.Objects;
 public class UserProfile extends AppCompatActivity {
 
 
-    private TextView username_tv,fullName_tv,cancel_request_username_tv,accept_username_tv,links_count_tv,unlinked_username_tv;
+    private TextView username_tv,fullName_tv,cancel_request_username_tv,accept_username_tv,links_count_tv,unlinked_username_tv,error_content_tv;
     private RecyclerView user_details_recyclerview;
 
 
@@ -65,7 +66,7 @@ public class UserProfile extends AppCompatActivity {
 
     private MaterialButton make_links,message_btn,
             cancel_request_btn,never_btn,accept_links_btn ,
-            delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn;
+            delete_links,not_for_now_btn,unlinked_btn,unlinked_never_btn,error_btn;
 
 
 
@@ -79,6 +80,7 @@ public class UserProfile extends AppCompatActivity {
     private String save_current_date;
 
 
+    private Dialog error_dialog;
 
     private DatabaseReference notificationRef;
 
@@ -95,6 +97,19 @@ public class UserProfile extends AppCompatActivity {
 
 
         userId = getIntent().getStringExtra("userId");
+
+
+        error_dialog=new Dialog(UserProfile.this);
+        error_dialog.setContentView(R.layout.error_dialog);
+        error_content_tv=error_dialog.findViewById(R.id.error_content_tv);
+        error_btn=error_dialog.findViewById(R.id.error_button_id);
+
+        error_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                error_dialog.dismiss();
+            }
+        });
 
 
 
@@ -482,26 +497,41 @@ public class UserProfile extends AppCompatActivity {
         make_links.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(make_links.getText().toString().trim().equals("Make Links")){
 
 
-                    make_links.setBackgroundColor(getResources().getColor(R.color.browser_actions_title_color));
-                    make_links.setEnabled(false);
+                new InternetCheck(internet -> {
 
-                    sendLinks();
+                    if(internet.booleanValue()){
+
+                        if(make_links.getText().toString().trim().equals("Make Links")){
 
 
-                }else if(make_links.getText().toString().trim().equals("Links Sent")){
+                            make_links.setBackgroundColor(getResources().getColor(R.color.browser_actions_title_color));
+                            make_links.setEnabled(false);
 
-                    cancel_request_dialog.show();
+                            sendLinks();
 
-                }else if(make_links.getText().toString().trim().equals("Invitations")){
 
-                    accept_dialog.show();
+                        }else if(make_links.getText().toString().trim().equals("Links Sent")){
 
-                }else{
-                    unlinked_dialog.show();
-                }
+                            cancel_request_dialog.show();
+
+                        }else if(make_links.getText().toString().trim().equals("Invitations")){
+
+                            accept_dialog.show();
+
+                        }else{
+                            unlinked_dialog.show();
+                        }
+
+                    }else {
+                        error_content_tv.setText("No Internet Connection");
+                        error_dialog.show();
+                    }
+
+                });
+
+
             }
         });
 

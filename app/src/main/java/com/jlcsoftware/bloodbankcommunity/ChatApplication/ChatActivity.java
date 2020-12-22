@@ -52,6 +52,7 @@ import com.jlcsoftware.bloodbankcommunity.Interface.MessageClickListener;
 import com.jlcsoftware.bloodbankcommunity.Models.MessagesModels;
 import com.jlcsoftware.bloodbankcommunity.NotCurrentUser.UserProfile;
 import com.jlcsoftware.bloodbankcommunity.R;
+import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.InternetCheck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickListe
     private String userId;
 
     private CircleImageView chat_user_img;
-    private TextView chat_username_tv,last_seen;
+    private TextView chat_username_tv,last_seen,error_content_tv;
 
     private FirebaseAuth firebaseAuth;
 
@@ -92,10 +93,11 @@ public class ChatActivity extends AppCompatActivity implements MessageClickListe
 
     private Dialog delete_message_dialog;
 
-    private MaterialButton delete_btn,never_btn;
+    private MaterialButton delete_btn,never_btn,error_btn;
 
     //solution for pagination
 
+    private Dialog error_dialog;
 
     private String message_key;
     int messagePosition;
@@ -113,6 +115,19 @@ public class ChatActivity extends AppCompatActivity implements MessageClickListe
 
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        error_dialog=new Dialog(ChatActivity.this);
+        error_dialog.setContentView(R.layout.error_dialog);
+        error_content_tv=error_dialog.findViewById(R.id.error_content_tv);
+        error_btn=error_dialog.findViewById(R.id.error_button_id);
+
+        error_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                error_dialog.dismiss();
+            }
+        });
 
         last_seen = findViewById(R.id.chat_online);
 
@@ -295,11 +310,26 @@ public class ChatActivity extends AppCompatActivity implements MessageClickListe
 
 
 
+
         chat_attachment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent,1024);
+
+                new InternetCheck(internet -> {
+
+                    if(internet.booleanValue()){
+
+                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(galleryIntent,1024);
+
+                    }else{
+                       error_content_tv.setText("No Internet Connection");
+                       error_dialog.show();
+                    }
+
+                });
+
+
 
 
             }

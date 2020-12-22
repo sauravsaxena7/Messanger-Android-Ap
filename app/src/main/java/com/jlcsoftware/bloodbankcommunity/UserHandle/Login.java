@@ -4,9 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.audiofx.BassBoost;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +42,7 @@ import com.jlcsoftware.bloodbankcommunity.MainActivity;
 import com.jlcsoftware.bloodbankcommunity.Models.Model_user_details;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserDetails.User_Details;
+import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.InternetCheck;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.KeyBoardServices;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserCredentials;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.ValidateUserDetails;
@@ -266,6 +272,8 @@ public class Login extends AppCompatActivity {
         });
 
 
+
+
         phone_et = findViewById(R.id.login_Phone_et);
         countryCodePicker = findViewById(R.id.login_ccp);
         otp_et = findViewById(R.id.login_otp_et);
@@ -278,53 +286,69 @@ public class Login extends AppCompatActivity {
         login_phone_btn = findViewById(R.id.login_phone_next_btn_id);
 
         login_phone_btn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
+            @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
             @Override
             public void onClick(View v) {
 
                 KeyBoardServices keyBoardServices = new KeyBoardServices();
                 keyBoardServices.hideKeyboardMethod(v,Login.this);
 
-                if(login_phone_btn.getText().toString().equals("Next")){
-                    resend_tv.setVisibility(View.GONE);
-                    otp_et.setVisibility(View.GONE);
 
-                    otp_et.setText("");
-                    if(TextUtils.isEmpty(phone_et.getText().toString()) || phone_et.getText().toString().length()!=10){
-
-                        phone_et.setBackground(getDrawable(R.drawable.error_edittext_background));
-                        phone_et.setError("Please enter a valid phone number");
+                new InternetCheck(internet -> {
 
 
+                    if(internet.booleanValue()){
+
+
+                        if(login_phone_btn.getText().toString().equals("Next")){
+                            resend_tv.setVisibility(View.GONE);
+                            otp_et.setVisibility(View.GONE);
+
+                            otp_et.setText("");
+                            if(TextUtils.isEmpty(phone_et.getText().toString()) || phone_et.getText().toString().length()!=10){
+
+                                phone_et.setBackground(getDrawable(R.drawable.error_edittext_background));
+                                phone_et.setError("Please enter a valid phone number");
+
+
+                            }else{
+
+                                phone_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
+
+                                ccp = countryCodePicker.getSelectedCountryCode();
+                                phoneNumber = "+"+countryCodePicker.getSelectedCountryCode()+phone_et.getText().toString();
+
+                                go_to_register_btn.setEnabled(false);
+                                login_phone_progressBar.setVisibility(View.VISIBLE);
+                                login_phone_btn.setText("");
+                                login_phone_btn.setEnabled(false);
+                                sendOtp();
+
+                            }
+
+                        }else{
+
+                            OTP = otp_et.getText().toString();
+                            if(TextUtils.isEmpty(OTP) || OTP.length()!=6){
+                                otp_et.setBackground(getDrawable(R.drawable.error_edittext_background));
+                                otp_et.setError("Enter Valid OTP");
+                            }else{
+
+                                login_phone_progressBar.setVisibility(View.VISIBLE);
+                                login_phone_btn.setText("");
+                                otp_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
+                                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId,OTP);
+                                signInWithPhoneAuthCredential(credential);
+                            }
+                        }
                     }else{
 
-                        phone_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
-
-                        ccp = countryCodePicker.getSelectedCountryCode();
-                        phoneNumber = "+"+countryCodePicker.getSelectedCountryCode()+phone_et.getText().toString();
-
-                        go_to_register_btn.setEnabled(false);
-                        login_phone_progressBar.setVisibility(View.VISIBLE);
-                        login_phone_btn.setText("");
-                        login_phone_btn.setEnabled(false);
-                        sendOtp();
+                        error_content_tv.setText("No Internet Connection");
+                        error_dialog.show();
 
                     }
+                });
 
-                }else{
-                    OTP = otp_et.getText().toString();
-                    if(TextUtils.isEmpty(OTP) || OTP.length()!=6){
-                        otp_et.setBackground(getDrawable(R.drawable.error_edittext_background));
-                        otp_et.setError("Enter Valid OTP");
-                    }else{
-
-                        login_phone_progressBar.setVisibility(View.VISIBLE);
-                        login_phone_btn.setText("");
-                        otp_et.setBackground(getDrawable(R.drawable.simple_edit_input_background));
-                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId,OTP);
-                        signInWithPhoneAuthCredential(credential);
-                    }
-                }
             }
         });
 
@@ -444,8 +468,6 @@ public class Login extends AppCompatActivity {
 
 
     }
-
-
 
 
     private void signInWithEmailAndPassword(String username_or_email, String pass) {
@@ -574,6 +596,8 @@ public class Login extends AppCompatActivity {
         });
 
     }
+
+
 
 
 }
