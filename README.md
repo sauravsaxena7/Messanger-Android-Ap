@@ -28,37 +28,29 @@
 
 
 
-### Registration
+### Registration System
 
 
 
 Register Screen             |  Phone OTP Verification         |  Add User Details
 :-------------------------:|:-------------------------:|:-------------------------:
- <img src="images/register_link_wink.jpg" alt="drawing" width="250"/>  | <img src="images/phone_otp.jpg" alt="drawing" width="250"/> | <img src="images/user_details.jpg" alt="drawing" width="250"/>
+ <img src="images/register_link_wink.jpg" alt="drawing" width="250"/>  | <img src="images/phone_login_link_wink.jpg" alt="drawing" width="250"/> | <img src="images/email_login_link_wink.jpg" alt="drawing" width="250"/>
 
 
 
- Deletion in progress             |  TODO Deleted
+
+### Login System
+
+ Login With Email orUsername             |  Login Witth Phone
 :-------------------------:|:-------------------------:
- <img src="images/register_link_wink.jpg" alt="drawing" width="250"/>  | <img src="images/delete1.jpg" alt="drawing" width="250"/>
+ <img src="images/email_login_link_wink.jpg" alt="drawing" width="250"/>  | <img src="images/phone_login_link_wink.jpg" alt="drawing" width="250"/>
 
 
-
-
-
-
-
-
- Deletion in progress             |  TODO Deleted
-:-------------------------:|:-------------------------:
- <img src="images/delete2.jpg" alt="drawing" width="250"/>  | <img src="images/delete1.jpg" alt="drawing" width="250"/>
-
-
-### Finished ToDo List
+### User Profile
 
 Move to Finished Task             |  Task is finished now
 :-------------------------:|:-------------------------:
- <img src="images/move1.jpg" alt="drawing" width="250"/>  | <img src="images/move2.jpg" alt="drawing" width="250"/>
+ <img src="images/link_wink_profile.jpg" alt="drawing" width="250"/>  | <img src="images/move2.jpg" alt="drawing" width="250"/>
 
 
 
