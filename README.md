@@ -32,7 +32,7 @@
 
 Register Screen             |  Phone OTP Verification         |  Add User Details
 :-------------------------:|:-------------------------:|:-------------------------:
- <img src="images/register_link_wink.jpg" alt="drawing" width="250"/>  | <img src="images/phhone_otp.jpg" alt="drawing" width="250"/> | <img src="images/user_details.jpg" alt="drawing" width="250"/>
+ <img src="images/register_link_wink.jpg" alt="drawing" width="250"/>  | <img src="images/phone_otp.jpg" alt="drawing" width="250"/> | <img src="images/user_details.jpg" alt="drawing" width="250"/>
 
 //hi
 
