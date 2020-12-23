@@ -46,12 +46,17 @@ Register Screen             |  Phone OTP Verification         |  Add User Detail
 
 ### User Profile
 
-Move to Finished Task             |  Task is finished now
-:-------------------------:|:-------------------------:
- <img src="images/link_wink_profile.jpg" alt="drawing" width="250"/>  | <img src="images/move2.jpg" alt="drawing" width="250"/>
+Current User profile             |  Search User         |  Edit Profile
+:-------------------------:|:-------------------------:|:-------------------------:
+ <img src="images/link_wink_profile.jpg" alt="drawing" width="250"/>  | <img src="images/search.jpg" alt="drawing" width="250"/> | <img src="images/edit_profile.jpg" alt="drawing" width="250"/>
 
 
-//hi
+
+User profile             |  User Links         |  User Chat
+:-------------------------:|:-------------------------:|:-------------------------:
+ <img src="images/other_user.jpg" alt="drawing" width="250"/>  | <img src="images/links.jpg" alt="drawing" width="250"/> | <img src="images/chat.jpg" alt="drawing" width="250"/>
+
+
 
 ### This is how you can use our software
 

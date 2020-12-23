@@ -37,11 +37,14 @@ public class Chats_Adapter extends RecyclerView.Adapter<Chats_Adapter.MyViewHold
     final private RecyclerViewClickListener clickListener;
 
 
+
     public Chats_Adapter(ArrayList<Links_Model> arrayList, Context context, RecyclerViewClickListener clickListener) {
         this.arrayList = arrayList;
         this.context = context;
         this.clickListener = clickListener;
     }
+
+
 
 //
 
