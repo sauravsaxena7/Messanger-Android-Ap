@@ -20,7 +20,7 @@
 
 ### Firstly you have to login or register to our app with right email and password.
 
- | LinkWink Splash Screen |            
+ | LinkWink Splash Screen            
 :-------------------------:
   <img src="images/splash_link_wink.jpg" alt="drawing" width="250"/>  
 
@@ -56,6 +56,11 @@ User profile             |  User Links         |  User Chat
 :-------------------------:|:-------------------------:|:-------------------------:
  <img src="images/other_user.jpg" alt="drawing" width="250"/>  | <img src="images/links.jpg" alt="drawing" width="250"/> | <img src="images/chat.jpg" alt="drawing" width="250"/>
 
+
+
+Logout            |  Messages
+:-------------------------:|:-------------------------:
+ <img src="images/logout.jpg" alt="drawing" width="250"/>  | <img src="images/message.jpg" alt="drawing" width="250"/>
 
 
 ### This is how you can use our software
