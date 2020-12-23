@@ -63,6 +63,20 @@ Logout            |  Messages
  <img src="images/logout.jpg" alt="drawing" width="250"/>  | <img src="images/message.jpg" alt="drawing" width="250"/>
 
 
+
+Make Links            |  Link Sent         |  Invitations
+:-------------------------:|:-------------------------:|:-------------------------:
+ <img src="images/make_links.jpg" alt="drawing" width="250"/>  | <img src="images/sent.jpg" alt="drawing" width="250"/> | <img src="images/invite.jpg" alt="drawing" width="250"/>
+
+
+Cancel Requested Links             |  Accept Links         |  Unlinked Links
+:-------------------------:|:-------------------------:|:-------------------------:
+ <img src="images/cancel.jpg" alt="drawing" width="250"/>  | <img src="images/accept.jpg" alt="drawing" width="250"/> | <img src="images/unlinked.jpg" alt="drawing" width="250"/>
+
+
+
+
+
 ### This is how you can use our software
 
 
