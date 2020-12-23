@@ -43,7 +43,7 @@ public class Chats_Adapter extends RecyclerView.Adapter<Chats_Adapter.MyViewHold
         this.clickListener = clickListener;
     }
 
-
+//
 
     @NonNull
     @Override
