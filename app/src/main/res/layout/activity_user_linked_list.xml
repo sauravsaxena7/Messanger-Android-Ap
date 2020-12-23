@@ -26,18 +26,6 @@ tools:context=".NotCurrentUser.UserLinkedList">
 
 
 
-        <TextView
-            android:id="@+id/no_user_found"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No user found."
-            android:padding="10dp"
-            android:textSize="14sp"
-            android:visibility="gone"
-            android:fontFamily="@font/opensansregular"
-            android:textColor="#fff"
-            tools:ignore="HardcodedText" />
-
 
         <ProgressBar
             android:id="@+id/user_search_progressBar"
@@ -91,6 +79,22 @@ tools:context=".NotCurrentUser.UserLinkedList">
                 android:fontFamily="@font/opensansregular"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
+
+
+
+            <TextView
+                android:id="@+id/no_user_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No user found."
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:fontFamily="@font/opensansregular"
+                android:textColor="#fff"
+                tools:ignore="HardcodedText" />
+
+
 
 
         </LinearLayout>

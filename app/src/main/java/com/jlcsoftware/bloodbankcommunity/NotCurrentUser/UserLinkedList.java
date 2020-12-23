@@ -11,9 +11,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,9 +35,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jlcsoftware.bloodbankcommunity.Adapter.Links_Adapter;
+import com.jlcsoftware.bloodbankcommunity.Adapter.Search_User_Adapters;
 import com.jlcsoftware.bloodbankcommunity.Interface.RecyclerViewClickListener;
 import com.jlcsoftware.bloodbankcommunity.MainActivity;
+import com.jlcsoftware.bloodbankcommunity.MainFragment.SearchFragment;
 import com.jlcsoftware.bloodbankcommunity.Models.Links_Model;
+import com.jlcsoftware.bloodbankcommunity.Models.Model_user_details;
 import com.jlcsoftware.bloodbankcommunity.R;
 import com.jlcsoftware.bloodbankcommunity.UserHandle.Login;
 import com.jlcsoftware.bloodbankcommunity.ValidateUserDetails.InternetCheck;
@@ -281,6 +287,31 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
         setSupportActionBar(toolbar);
 
 
+        EditText editText = findViewById(R.id.user_search_et);
+
+        editText.setVisibility(View.GONE);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //searchUser(s);
+
+            }
+        });
+
+
+
 
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -339,6 +370,8 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
     }
 
 
+
+
     private void getAllLinkedUsers() {
 
 
@@ -375,6 +408,91 @@ public class UserLinkedList extends AppCompatActivity implements RecyclerViewCli
         });
 
     }
+
+
+
+
+    private void searchUser(final CharSequence query) {
+
+
+        arrayList = new ArrayList<>();
+
+
+        link_ref.keepSynced(true);
+
+        link_ref.child(userId2).child("Total_Links").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Links_Model links_model = ds.getValue(Links_Model.class);
+
+
+                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                    reference.keepSynced(true);
+
+
+                    assert links_model != null;
+                    reference.child("user_details").child(links_model.getUserId())
+
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            String first_name = snapshot.child("first_name").getValue(String.class);
+
+                            String last_name = snapshot.child("last_name").getValue(String.class);
+
+                            String username = snapshot.child("username").getValue(String.class);
+
+                            String full_name = first_name+" "+last_name;
+
+                            String email = snapshot.child("email").getValue(String.class);
+
+
+
+                            if (full_name.contains(query)
+                                    || username.contains(query)
+                                    || email.contains(query)) {
+
+                                arrayList.add(links_model);
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+
+                if(arrayList.isEmpty()){
+                    no_user_found.setVisibility(View.VISIBLE);
+                }else{
+                    no_user_found.setVisibility(View.GONE);
+                }
+//                Search_User_Adapters search_user_adapters = new Search_User_Adapters(arrayList,getActivity(), SearchFragment.this);
+//                recyclerView.setAdapter(search_user_adapters);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+
 
 
 

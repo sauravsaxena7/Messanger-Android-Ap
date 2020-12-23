@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
                 android:gravity="center"
                 android:layout_marginBottom="-170dp"
                 android:orientation="vertical">
+
 
 
 
@@ -73,6 +75,7 @@
                         tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
 
 
+
                     <EditText
                         android:id="@+id/user_search_et"
                         android:layout_width="match_parent"
@@ -82,6 +85,7 @@
                         android:padding="11dp"
                         android:layout_marginTop="14dp"
                         android:maxLines="1"
+                        android:visibility="gone"
                         android:background="@drawable/search_edit_text_backgrounf"
                         android:textColorHint="#fff"
                         android:drawableStart="@drawable/search_symbol"
@@ -149,20 +153,7 @@
                         tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
 
 
-
-
-
-
-
-
                 </LinearLayout>
-
-
-
-
-
-
-
 
             </androidx.appcompat.widget.Toolbar>
 

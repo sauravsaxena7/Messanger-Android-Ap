@@ -125,6 +125,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         });
 
 
+
+
         toolbar = view.findViewById(R.id.search_main_toolbar);
         setHasOptionsMenu(true);
 
@@ -177,6 +179,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 .getReference("users");
         reference.keepSynced(true);
 
+
+
         reference.keepSynced(true);
         reference.child("user_details").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -185,7 +189,10 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 for(DataSnapshot ds : snapshot.getChildren()){
                     Model_user_details model_user_details = ds.getValue(Model_user_details.class);
                     if(!model_user_details.getUserId().equals(fUser.getUid())){
-                        arrayList.add(model_user_details);
+                        if(!model_user_details.getLast_name().equals("")){
+                            arrayList.add(model_user_details);
+                        }
+
 
                     }
 
@@ -228,11 +235,21 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                     if (!model_user_details.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
 
                         String fullName = model_user_details.getFirst_name() + " " + model_user_details.getLast_name();
+
+
                         if (model_user_details.getUsername().contains(query)
                                 || fullName.contains(query)
                                 || model_user_details.getEmail().contains(query)) {
 
-                            arrayList.add(model_user_details);
+
+
+                            if(!model_user_details.getLast_name().equals("")){
+
+                                arrayList.add(model_user_details);
+
+                            }
+
+
 
                         }
 

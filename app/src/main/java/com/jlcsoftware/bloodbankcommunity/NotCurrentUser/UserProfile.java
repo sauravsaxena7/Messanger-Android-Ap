@@ -328,32 +328,39 @@ public class UserProfile extends AppCompatActivity {
 
 
 
-
-
-
-
         links_linear_layout = findViewById(R.id.links_linear_layout);
+
 
         links_linear_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
+
                Intent intent = new Intent(UserProfile.this,UserLinkedList.class);
                intent.putExtra("userId",userId);
                intent.putExtra("username",username);
                intent.putExtra("verify_user",verify_user);
-                overridePendingTransition( 0, 0);
-                startActivity(intent);
-                overridePendingTransition( 0, 0);
+               overridePendingTransition( 0, 0);
+               startActivity(intent);
+               overridePendingTransition( 0, 0);
 
-                //getFragmentManager().beginTransaction().add(R.id.fragment_layout, linkedListFragment).addToBackStack(null).commit();
+
+
+               //getFragmentManager().beginTransaction().add(R.id.fragment_layout, linkedListFragment).addToBackStack(null).commit();
             }
         });
 
 
+
+
+
         reference.keepSynced(true);
 
+
+
         reference.child("user_details").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @SuppressLint({"SetTextI18n", "CheckResult"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
