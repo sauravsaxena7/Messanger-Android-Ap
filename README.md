@@ -1,22 +1,22 @@
 # LinkWink social media app
 
 
->In ToDO Application we use Rest Api as backend. This REST API is build in NodeJs,ExpressJs and Mongodb . IDE VISUAL STDIO CODE and the API tested on 
+>This application consist of user information which make links with another user. 
 
 
 
 
->For Android Application Development we use IDE ANDROID STDIO and java.
+>This app include features of private one to one chat
 
 
 
 ## Features Of Application
 
-&rarr; ToDo App handles your daily routine. some times you forgot to do your works.
+&rarr; linkWink app is a social media app with messaging feature.
 
-&rarr; Our App is very concern about your precious time. 
+&rarr;  Here you can eaisly make links with your friends
 
-&rarr; And this app will definitely help you todo your works on very right time.
+&rarr; And start chatting to them
 
 ### Firstly you have to login or register to our app with right email and password.
 
